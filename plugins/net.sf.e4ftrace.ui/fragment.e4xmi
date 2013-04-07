@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ASCII"?>
 <fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_mPC98J-PEeKpuNYKieO4fA">
-  <imports xsi:type="commands:Command" xmi:id="_6OgcYJ-XEeKpuNYKieO4fA" elementId="net.sf.e4ftrace.open"/>
+  <imports xsi:type="commands:Command" xmi:id="_MmYj4J-eEeKQ08MGzhTRPg" elementId="net.sf.e4ftrace.core.command.openfile"/>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_ohx1kJ-PEeKpuNYKieO4fA" featurename="children" parentElementId="menu:org.eclipse.ui.main.menu">
     <elements xsi:type="menu:Menu" xmi:id="_jkK50J-UEeKpuNYKieO4fA" elementId="net.sf.e4ftrace.ui.menu.openfile" label="Load" tooltip="Open">
-      <children xsi:type="menu:HandledMenuItem" xmi:id="_v2XrQJ-UEeKpuNYKieO4fA" elementId="net.sf.e4ftrace.ui.handledmenuitem.openfile" label="Open File" tooltip="Open File" command="_6OgcYJ-XEeKpuNYKieO4fA"/>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_v2XrQJ-UEeKpuNYKieO4fA" elementId="net.sf.e4ftrace.ui.handledmenuitem.openfile" label="Open File" tooltip="Open File" command="_MmYj4J-eEeKQ08MGzhTRPg"/>
     </elements>
   </fragments>
 </fragment:ModelFragments>

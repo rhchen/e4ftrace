@@ -1,13 +1,15 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: E4Ftrace Core
-Bundle-SymbolicName: net.sf.e4ftrace.core
+Bundle-SymbolicName: net.sf.e4ftrace.core;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: net.sf.e4ftrace.core.E4FtraceActivator
 Bundle-Vendor: Izhtw
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.e4.core.di,
- javax.inject
+ javax.inject,
+ org.eclipse.e4.ui.workbench,
+ org.eclipse.e4.ui.di
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: javax.annotation;version="1.0.0"
