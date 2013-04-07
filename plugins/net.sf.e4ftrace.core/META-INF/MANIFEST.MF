@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: E4Ftrace Core
+Bundle-SymbolicName: net.sf.e4ftrace.core
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: net.sf.e4ftrace.core.E4FtraceActivator
+Bundle-Vendor: Izhtw
+Require-Bundle: org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
