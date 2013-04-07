@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_MMJx4J-REeKpuNYKieO4fA">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_NdvVkJ-REeKpuNYKieO4fA" featurename="command" parentElementId="net.sf.e4ftrace.application">
+    <elements xsi:type="commands:Command" xmi:id="_ZJH-oJ-REeKpuNYKieO4fA" elementId="net.sf.e4ftrace.core.command.openfile" commandName="Open File" description="Open File"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_sc1D8J-REeKpuNYKieO4fA" featurename="command" parentElementId="net.sf.e4ftrace.application">
+    <elements xsi:type="commands:Handler" xmi:id="_8NsUoJ-REeKpuNYKieO4fA" elementId="net.sf.e4ftrace.core.handler.openfile" contributionURI="bundleclass://net.sf.e4ftrace.core/net.sf.e4ftrace.core.handler.OpenFileHandler" command="_ZJH-oJ-REeKpuNYKieO4fA"/>
+  </fragments>
+</fragment:ModelFragments>

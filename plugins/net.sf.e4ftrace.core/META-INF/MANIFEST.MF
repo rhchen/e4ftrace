@@ -5,6 +5,9 @@ Bundle-SymbolicName: net.sf.e4ftrace.core
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: net.sf.e4ftrace.core.E4FtraceActivator
 Bundle-Vendor: Izhtw
-Require-Bundle: org.eclipse.core.runtime
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.e4.core.di,
+ javax.inject
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
+Import-Package: javax.annotation;version="1.0.0"
