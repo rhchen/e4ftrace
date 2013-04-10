@@ -19,6 +19,7 @@
       <plugin id="javax.inject"/>
       <plugin id="javax.xml"/>
       <plugin id="net.sf.e4ftrace"/>
+      <plugin id="net.sf.e4ftrace.core"/>
       <plugin id="net.sf.e4ftrace.ui"/>
       <plugin id="org.apache.batik.css"/>
       <plugin id="org.apache.batik.util"/>

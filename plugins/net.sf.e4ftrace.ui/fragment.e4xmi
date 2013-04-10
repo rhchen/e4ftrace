@@ -7,8 +7,10 @@
     <elements xsi:type="commands:Handler" xmi:id="_HZkfoKExEeKil4Lend8hBA" elementId="net.sf.e4ftrace.ui.handler.raw" contributionURI="bundleclass://net.sf.e4ftrace.ui/net.sf.e4ftrace.ui.handler.RawHandler" command="_zwauwKEwEeKil4Lend8hBA"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_aTa6gKExEeKil4Lend8hBA" featurename="children" parentElementId="menu:org.eclipse.ui.main.menu">
-    <elements xsi:type="menu:Menu" xmi:id="_oMY1cKExEeKil4Lend8hBA" elementId="net.sf.e4ftrace.ui.menu.raw" label="Raw" tooltip="Raw">
-      <children xsi:type="menu:HandledMenuItem" xmi:id="_rdW28KExEeKil4Lend8hBA" elementId="net.sf.e4ftrace.ui.handledmenuitem.raw" label="Raw Menu" tooltip="Raw Menu" command="_zwauwKEwEeKil4Lend8hBA"/>
+    <elements xsi:type="menu:Menu" xmi:id="_oMY1cKExEeKil4Lend8hBA" elementId="net.sf.e4ftrace.ui.menu.raw" label="Raw Menu" tooltip="Raw Menu">
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_rdW28KExEeKil4Lend8hBA" elementId="net.sf.e4ftrace.ui.handledmenuitem.raw" label="Raw" tooltip="Raw" command="_zwauwKEwEeKil4Lend8hBA"/>
+      <children xsi:type="menu:MenuSeparator" xmi:id="_OWpfEKH4EeKL96wPQitfZw" elementId="net.sf.e4ftrace.ui.menuseparator.0"/>
+      <children xsi:type="menu:DirectMenuItem" xmi:id="_S8u5YKH4EeKL96wPQitfZw" elementId="net.sf.e4ftrace.ui.directmenuitem.diraw" label="Di Raw " tooltip="Di Raw " contributionURI="bundleclass://net.sf.e4ftrace.ui/net.sf.e4ftrace.ui.handler.RawHandler"/>
     </elements>
   </fragments>
 </fragment:ModelFragments>
