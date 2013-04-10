@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_EQiHkKEwEeKil4Lend8hBA">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_OWKTwKEwEeKil4Lend8hBA" featurename="command" parentElementId="net.sf.e4ftrace.application">
+    <elements xsi:type="commands:Command" xmi:id="_zwauwKEwEeKil4Lend8hBA" elementId="net.sf.e4ftrace.ui.command.raw" commandName="Raw"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_B4W50KExEeKil4Lend8hBA" featurename="command" parentElementId="net.sf.e4ftrace.application">
+    <elements xsi:type="commands:Handler" xmi:id="_HZkfoKExEeKil4Lend8hBA" elementId="net.sf.e4ftrace.ui.handler.raw" contributionURI="bundleclass://net.sf.e4ftrace.ui/net.sf.e4ftrace.ui.handler.RawHandler" command="_zwauwKEwEeKil4Lend8hBA"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_aTa6gKExEeKil4Lend8hBA" featurename="children" parentElementId="menu:org.eclipse.ui.main.menu">
+    <elements xsi:type="menu:Menu" xmi:id="_oMY1cKExEeKil4Lend8hBA" elementId="net.sf.e4ftrace.ui.menu.raw" label="Raw" tooltip="Raw">
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_rdW28KExEeKil4Lend8hBA" elementId="net.sf.e4ftrace.ui.handledmenuitem.raw" label="Raw Menu" tooltip="Raw Menu" command="_zwauwKEwEeKil4Lend8hBA"/>
+    </elements>
+  </fragments>
+</fragment:ModelFragments>
