@@ -4,7 +4,7 @@
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_SQJSgKEvEeKil4Lend8hBA">
       <children xsi:type="advanced:Perspective" xmi:id="_SQJSgaEvEeKil4Lend8hBA">
         <children xsi:type="basic:PartSashContainer" xmi:id="_SQJSgqEvEeKil4Lend8hBA">
-          <children xsi:type="basic:PartStack" xmi:id="_SQJSg6EvEeKil4Lend8hBA">
+          <children xsi:type="basic:PartStack" xmi:id="_SQJSg6EvEeKil4Lend8hBA" elementId="net.sf.e4ftrace.partstack">
             <children xsi:type="basic:Part" xmi:id="_SQJShKEvEeKil4Lend8hBA" contributionURI="bundleclass://net.sf.e4ftrace/net.sf.e4ftrace.parts.SamplePart" label="Sample Part"/>
           </children>
         </children>
