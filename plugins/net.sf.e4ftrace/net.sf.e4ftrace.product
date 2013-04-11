@@ -117,6 +117,8 @@
       <feature id="org.eclipse.emf.common"/>
       <feature id="net.sf.e4ftrace.feature" version="1.0.0.qualifier"/>
       <feature id="org.apache.poi.feature" version="1.0.0.qualifier"/>
+      <feature id="org.eclipse.linuxtools.tmf" version="1.2.0.qualifier"/>
+      <feature id="org.eclipse.linuxtools.ctf"/>
    </features>
 
 

@@ -10,5 +10,7 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
  org.eclipse.e4.core.di;bundle-version="1.2.0",
  org.eclipse.e4.ui.workbench;bundle-version="0.11.0",
  org.eclipse.e4.ui.di;bundle-version="0.10.1",
- net.sf.e4ftrace.core;bundle-version="1.0.0"
+ net.sf.e4ftrace.core;bundle-version="1.0.0",
+ org.eclipse.linuxtools.tmf.core;bundle-version="1.2.0",
+ org.eclipse.linuxtools.tmf.ui;bundle-version="1.2.0"
 Import-Package: javax.annotation
