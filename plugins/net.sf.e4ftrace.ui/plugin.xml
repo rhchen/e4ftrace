@@ -8,5 +8,17 @@
             uri="fragment.e4xmi">
       </fragment>
    </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="net.sf.e4ftrace.ui.definition.myactivePartId">
+         <with
+               variable="myactivePartId">
+            <equals
+                  value="net.sf.e4ftrace.ui.part.timeline">
+            </equals>
+         </with>
+      </definition>
+   </extension>
 
 </plugin>

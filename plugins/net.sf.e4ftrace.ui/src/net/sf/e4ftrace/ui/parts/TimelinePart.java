@@ -4,12 +4,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import net.sf.e4ftrace.ui.model.EventImpl;
 import net.sf.e4ftrace.ui.model.TraceImpl;
 import net.sf.e4ftrace.ui.model.TraceModelImplFactory;
 import net.sf.e4ftrace.ui.provider.TsfImplProvider;
 
+import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.ui.di.UIEventTopic;
+import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.ITimeGraphRangeListener;
 import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.ITimeGraphSelectionListener;
 import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.ITimeGraphTimeListener;
@@ -20,6 +27,8 @@ import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.TimeGraphViewer;
 import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.model.ITimeGraphEntry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+
+import org.osgi.service.event.Event;
 
 public class TimelinePart implements
 ITimeGraphSelectionListener, ITimeGraphTimeListener,
@@ -151,5 +160,23 @@ ITimeGraphRangeListener{
 
 		// Extract the last nine digits (e.g. fraction of a S expressed in ns
 		return strVal.substring(strVal.length() - 9);
+	}
+	
+	@Inject
+	@Optional
+	public void partActivation(
+			@UIEventTopic(UIEvents.UILifeCycle.ACTIVATE) Event event,
+			MApplication application) {
+
+		System.out.println("Got Part");
+		
+		// Don't inject MPart and IEclipseContext! Need from root context here
+		MPart activePart = (MPart) event.getProperty(UIEvents.EventTags.ELEMENT);
+		
+		IEclipseContext context = application.getContext();
+		
+		if (activePart != null) {
+			context.set("myactivePartId", activePart.getElementId());
+		}
 	}
 }
