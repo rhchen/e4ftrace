@@ -13,6 +13,7 @@ import org.eclipse.e4.ui.model.application.ui.MContext;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 
 @SuppressWarnings("restriction")
 public class RawHandler {
@@ -37,6 +38,15 @@ public class RawHandler {
 		String elementId = (String)context.get("myactivePartId");
 		
 		System.out.println("RawHandler : " + elementId);
+		
+		// Get the part
+		MPart part = partService.findPart("net.sf.e4ftrace.ui.part.timeline");
+		
+		// Required if initial not visible
+		part.setVisible(true);
+
+		//Show the part
+		partService.showPart(part, PartState.VISIBLE); 
 		
 		tracer.parse();
 	}
