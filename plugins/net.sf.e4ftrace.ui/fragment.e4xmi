@@ -16,6 +16,6 @@
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_Az1OsKLGEeK-Kb-CoUJNTg" featurename="children" parentElementId="net.sf.e4ftrace.partstack">
-    <elements xsi:type="basic:Part" xmi:id="_Ia5RQKLHEeK-Kb-CoUJNTg" elementId="net.sf.e4ftrace.ui.part.timeline" contributionURI="bundleclass://net.sf.e4ftrace.ui/net.sf.e4ftrace.ui.parts.TimelinePart" label="Timeline" tooltip="Timeline"/>
+    <elements xsi:type="basic:Part" xmi:id="_Ia5RQKLHEeK-Kb-CoUJNTg" elementId="net.sf.e4ftrace.ui.part.timeline" contributionURI="bundleclass://net.sf.e4ftrace.ui/net.sf.e4ftrace.ui.parts.TimelinePart" label="Timeline" tooltip="Timeline" closeable="true"/>
   </fragments>
 </fragment:ModelFragments>

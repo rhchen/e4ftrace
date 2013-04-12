@@ -12,6 +12,7 @@ import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MContext;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
 @SuppressWarnings("restriction")
 public class RawHandler {
@@ -24,6 +25,8 @@ public class RawHandler {
 	
 	@Inject @Optional private MContext context;
 	
+	@Inject @Optional private EPartService partService;
+	
 	@Inject private FtraceParser tracer;
 	
 	@Execute
@@ -34,8 +37,6 @@ public class RawHandler {
 		String elementId = (String)context.get("myactivePartId");
 		
 		System.out.println("RawHandler : " + elementId);
-		
-		
 		
 		tracer.parse();
 	}
