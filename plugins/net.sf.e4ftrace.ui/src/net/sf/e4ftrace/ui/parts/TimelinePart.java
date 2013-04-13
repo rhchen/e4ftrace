@@ -47,6 +47,8 @@ ITimeGraphRangeListener{
 	@Inject private ECommandService commandService;
 	@Inject private EHandlerService handlerService;
 	
+	@Inject private RawHandler rawHandler;
+	
 	private static SimpleDateFormat stimeformat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
 	
 	@PostConstruct
@@ -65,9 +67,9 @@ ITimeGraphRangeListener{
 		String aboutCmd = "org.eclipse.ui.help.aboutAction";
 		String RawCmd   = "net.sf.e4ftrace.ui.command.raw";
 		
-//		Command command = commandService.getCommand("net.sf.e4ftrace.ui.command.raw");
-//		System.out.println("command.isDefined() : "+ command.isDefined());
-//		handlerService.activateHandler("net.sf.e4ftrace.ui.command.raw", new RawHandler());
+		Command command = commandService.getCommand(RawCmd);
+		System.out.println("command.isDefined() : "+ command.isDefined());
+		handlerService.activateHandler(RawCmd, rawHandler);
 		ParameterizedCommand cmd = commandService.createCommand(RawCmd, null);
 		System.out.println("handlerService.canExecute(cmd) : "+ handlerService.canExecute(cmd));
 		handlerService.executeHandler(cmd); 
