@@ -44,8 +44,8 @@ ITimeGraphRangeListener{
 	private TraceModelImplFactory fact;
 	
 	
-	@Inject @Optional private ECommandService commandService;
-	@Inject @Optional private EHandlerService handlerService;
+	@Inject private ECommandService commandService;
+	@Inject private EHandlerService handlerService;
 	
 	private static SimpleDateFormat stimeformat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
 	
@@ -62,12 +62,15 @@ ITimeGraphRangeListener{
 		tsfviewer.addRangeListener(this);
 		tsfviewer.setTimeCalendarFormat(true);
 		
+		String aboutCmd = "org.eclipse.ui.help.aboutAction";
+		String RawCmd   = "net.sf.e4ftrace.ui.command.raw";
+		
 //		Command command = commandService.getCommand("net.sf.e4ftrace.ui.command.raw");
 //		System.out.println("command.isDefined() : "+ command.isDefined());
 //		handlerService.activateHandler("net.sf.e4ftrace.ui.command.raw", new RawHandler());
-//		ParameterizedCommand cmd = commandService.createCommand("net.sf.e4ftrace.ui.command.raw", null);
-//		System.out.println("handlerService.canExecute(cmd) : "+ handlerService.canExecute(cmd));
-//		handlerService.executeHandler(cmd); 
+		ParameterizedCommand cmd = commandService.createCommand(RawCmd, null);
+		System.out.println("handlerService.canExecute(cmd) : "+ handlerService.canExecute(cmd));
+		handlerService.executeHandler(cmd); 
 	}
 
 	@Override
