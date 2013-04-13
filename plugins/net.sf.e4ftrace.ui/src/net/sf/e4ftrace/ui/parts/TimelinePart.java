@@ -6,11 +6,16 @@ import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import net.sf.e4ftrace.ui.handler.RawHandler;
 import net.sf.e4ftrace.ui.model.EventImpl;
 import net.sf.e4ftrace.ui.model.TraceImpl;
 import net.sf.e4ftrace.ui.model.TraceModelImplFactory;
 import net.sf.e4ftrace.ui.provider.TsfImplProvider;
 
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.ParameterizedCommand;
+import org.eclipse.e4.core.commands.ECommandService;
+import org.eclipse.e4.core.commands.EHandlerService;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.UIEventTopic;
@@ -30,12 +35,17 @@ import org.eclipse.swt.widgets.Composite;
 
 import org.osgi.service.event.Event;
 
+@SuppressWarnings("restriction")
 public class TimelinePart implements
 ITimeGraphSelectionListener, ITimeGraphTimeListener,
 ITimeGraphRangeListener{
 
 	private TimeGraphViewer tsfviewer;
 	private TraceModelImplFactory fact;
+	
+	
+	@Inject @Optional private ECommandService commandService;
+	@Inject @Optional private EHandlerService handlerService;
 	
 	private static SimpleDateFormat stimeformat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
 	
@@ -51,6 +61,13 @@ ITimeGraphRangeListener{
 		tsfviewer.addSelectionListener(this);
 		tsfviewer.addRangeListener(this);
 		tsfviewer.setTimeCalendarFormat(true);
+		
+//		Command command = commandService.getCommand("net.sf.e4ftrace.ui.command.raw");
+//		System.out.println("command.isDefined() : "+ command.isDefined());
+//		handlerService.activateHandler("net.sf.e4ftrace.ui.command.raw", new RawHandler());
+//		ParameterizedCommand cmd = commandService.createCommand("net.sf.e4ftrace.ui.command.raw", null);
+//		System.out.println("handlerService.canExecute(cmd) : "+ handlerService.canExecute(cmd));
+//		handlerService.executeHandler(cmd); 
 	}
 
 	@Override
