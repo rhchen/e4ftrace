@@ -15,6 +15,9 @@ import java.lang.reflect.InvocationTargetException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.sf.e4ftrace.service.handler.OpenTraceHandler;
+
+import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
@@ -27,9 +30,13 @@ import org.eclipse.swt.widgets.Shell;
 @SuppressWarnings("restriction")
 public class OpenHandler {
 
+	public static final String OPEN_TRACE_COMMAND = "net.sf.e4ftrace.service.command.open";
 	
 	@Inject private ECommandService commandService;
 	@Inject private EHandlerService handlerService;
+	
+	@Inject private OpenTraceHandler openTraceHandler;
+	
 	
 	@Execute
 	public void execute(
@@ -37,8 +44,23 @@ public class OpenHandler {
 		FileDialog dialog = new FileDialog(shell);
 		dialog.open();
 		
-		ParameterizedCommand cmd = commandService.createCommand("org.eclipse.ui.help.aboutAction", null);
+//		ParameterizedCommand cmd = commandService.createCommand("org.eclipse.ui.help.aboutAction", null);
+//		System.out.println("handlerService.canExecute(cmd) : "+ handlerService.canExecute(cmd));
+//		handlerService.executeHandler(cmd);
+		
+		
+		
+		ParameterizedCommand cmd = commandService.createCommand(OPEN_TRACE_COMMAND, null);
 		System.out.println("handlerService.canExecute(cmd) : "+ handlerService.canExecute(cmd));
+		
+		if(!handlerService.canExecute(cmd)){
+			
+			Command command = commandService.getCommand(OPEN_TRACE_COMMAND);
+			System.out.println("command.isDefined() : "+ command.isDefined() + ":" + command.isEnabled());
+			handlerService.activateHandler(OPEN_TRACE_COMMAND, openTraceHandler);
+			
+		}
+		
 		handlerService.executeHandler(cmd); 
 	}
 }

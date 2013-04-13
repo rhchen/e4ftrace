@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_XA0CMKQOEeKuYaGYME16KA">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_RteD0KQPEeKuYaGYME16KA" featurename="command" parentElementId="org.eclipse.e4.ide.application">
+    <elements xsi:type="commands:Command" xmi:id="_Vw2ZsKQPEeKuYaGYME16KA" elementId="net.sf.e4ftrace.service.command.open" commandName="Open Trace" description="Open Trace"/>
+    <elements xsi:type="commands:Command" xmi:id="_dgb7kKQPEeKuYaGYME16KA" elementId="net.sf.e4ftrace.service.command.fetch" commandName="Fetch Trace" description="Fetch Trace"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_kSfowKQQEeKuYaGYME16KA" featurename="command" parentElementId="org.eclipse.e4.ide.application">
+    <elements xsi:type="commands:Handler" xmi:id="_neC-wKQQEeKuYaGYME16KA" elementId="net.sf.e4ftrace.service.handler.open" contributionURI="bundleclass://net.sf.e4ftrace.service/net.sf.e4ftrace.service.handler.OpenTraceHandler" command="_Vw2ZsKQPEeKuYaGYME16KA"/>
+    <elements xsi:type="commands:Handler" xmi:id="_005rIKQQEeKuYaGYME16KA" elementId="net.sf.e4ftrace.service.handler.fetch" contributionURI="bundleclass://net.sf.e4ftrace.service/net.sf.e4ftrace.service.handler.FetchTraceHandler" command="_dgb7kKQPEeKuYaGYME16KA"/>
+  </fragments>
+</fragment:ModelFragments>
