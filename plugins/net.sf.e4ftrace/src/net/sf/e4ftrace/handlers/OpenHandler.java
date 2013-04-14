@@ -10,11 +10,14 @@
  *******************************************************************************/
 package net.sf.e4ftrace.handlers;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.sf.e4ftrace.core.ITraceEvent;
+import net.sf.e4ftrace.core.impl.TraceEvent;
 import net.sf.e4ftrace.service.handler.OpenTraceHandler;
 
 import org.eclipse.core.commands.Command;
@@ -27,6 +30,7 @@ import org.eclipse.e4.core.contexts.RunAndTrack;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.GroupUpdates;
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MContext;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
@@ -46,7 +50,7 @@ public class OpenHandler {
 	@Inject private IEclipseContext cont;
 	@Inject private OpenTraceHandler openTraceHandler;
 	
-	
+	@Inject private IEventBroker eventBroker;
 	
 	@Inject
 	private void setInfo(@Optional @Named ("FILE_PATH_W") String s){
@@ -61,7 +65,15 @@ public class OpenHandler {
 			@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, final IEclipseContext context, MContext mcont, MApplication app){
 		
 		FileDialog dialog = new FileDialog(shell);
-		dialog.open();
+		
+		String filePath = dialog.open();
+		
+		File fileToOpen = new File(filePath);
+		
+		if(fileToOpen.exists() && !fileToOpen.isDirectory()){
+			
+			eventBroker.send(ITraceEvent.TOPIC_EVENT_UI_OPEN_FILE, new TraceEvent(fileToOpen));
+		}
 		
 		final IEclipseContext wContext = app.getContext();
 		wContext.set("FILE_PATH_W", "fff");
