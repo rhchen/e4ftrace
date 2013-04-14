@@ -2,8 +2,10 @@ package net.sf.e4ftrace.service.impl;
 
 import java.io.File;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.di.extensions.EventTopic;
@@ -41,5 +43,10 @@ public class TraceService implements ITraceService {
 		
 	}
 	
-
+	@PostConstruct
+	public void init(IEclipseContext context) {
+		
+		System.out.println("TraceService init");
+		
+	}
 }

@@ -19,6 +19,7 @@ import javax.inject.Named;
 import net.sf.e4ftrace.core.ITraceEvent;
 import net.sf.e4ftrace.core.impl.TraceEvent;
 import net.sf.e4ftrace.service.handler.OpenTraceHandler;
+import net.sf.e4ftrace.service.impl.TraceService;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;
@@ -52,6 +53,8 @@ public class OpenHandler {
 	
 	@Inject private IEventBroker eventBroker;
 	
+	@Inject private TraceService traceService;
+	
 	@Inject
 	private void setInfo(@Optional @Named ("FILE_PATH_W") String s){
 		
@@ -73,6 +76,8 @@ public class OpenHandler {
 		if(fileToOpen.exists() && !fileToOpen.isDirectory()){
 			
 			eventBroker.send(ITraceEvent.TOPIC_EVENT_UI_OPEN_FILE, new TraceEvent(fileToOpen));
+			
+			traceService.openTrace();
 		}
 		
 		final IEclipseContext wContext = app.getContext();
