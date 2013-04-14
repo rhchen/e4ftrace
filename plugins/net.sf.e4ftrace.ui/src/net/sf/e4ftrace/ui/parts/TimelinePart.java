@@ -67,12 +67,12 @@ ITimeGraphRangeListener{
 		String aboutCmd = "org.eclipse.ui.help.aboutAction";
 		String RawCmd   = "net.sf.e4ftrace.ui.command.raw";
 		
-		Command command = commandService.getCommand(RawCmd);
-		System.out.println("command.isDefined() : "+ command.isDefined());
-		handlerService.activateHandler(RawCmd, rawHandler);
-		ParameterizedCommand cmd = commandService.createCommand(RawCmd, null);
-		System.out.println("handlerService.canExecute(cmd) : "+ handlerService.canExecute(cmd));
-		handlerService.executeHandler(cmd); 
+//		Command command = commandService.getCommand(RawCmd);
+//		System.out.println("command.isDefined() : "+ command.isDefined());
+//		handlerService.activateHandler(RawCmd, rawHandler);
+//		ParameterizedCommand cmd = commandService.createCommand(RawCmd, null);
+//		System.out.println("handlerService.canExecute(cmd) : "+ handlerService.canExecute(cmd));
+//		handlerService.executeHandler(cmd); 
 	}
 
 	@Override
@@ -190,15 +190,20 @@ ITimeGraphRangeListener{
 			@UIEventTopic(UIEvents.UILifeCycle.ACTIVATE) Event event,
 			MApplication application) {
 
-		System.out.println("Got Part");
+		System.out.println("Got Part : "+ event.getTopic());
+		
 		
 		// Don't inject MPart and IEclipseContext! Need from root context here
 		MPart activePart = (MPart) event.getProperty(UIEvents.EventTags.ELEMENT);
+		
 		
 		IEclipseContext context = application.getContext();
 		
 		if (activePart != null) {
 			context.set("myactivePartId", activePart.getElementId());
+			System.out.println("activePart : "+ activePart.getElementId());
+		}else{
+			System.out.println("activePart : null");
 		}
 	}
 }

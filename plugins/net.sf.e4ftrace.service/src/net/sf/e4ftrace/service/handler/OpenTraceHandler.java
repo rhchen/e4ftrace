@@ -1,6 +1,7 @@
  
 package net.sf.e4ftrace.service.handler;
 
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.CanExecute;
@@ -10,9 +11,11 @@ import org.eclipse.e4.core.di.annotations.CanExecute;
 public class OpenTraceHandler {
 	
 	@Execute
-	public void execute() {
+	public void execute(IEclipseContext context) {
 		
-		System.out.println("OpenTraceHandler");
+		String str = (String)context.get("FILE_PATH");
+		
+		System.out.println("OpenTraceHandler"+ str);
 	
 	}
 	
@@ -22,5 +25,6 @@ public class OpenTraceHandler {
 		return true;
 	
 	}
+
 		
 }

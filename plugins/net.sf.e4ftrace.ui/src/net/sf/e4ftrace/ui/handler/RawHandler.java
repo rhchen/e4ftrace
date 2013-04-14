@@ -37,13 +37,17 @@ public class RawHandler {
 	@Inject private FtraceParser tracer;
 	
 	@Execute
-	public void execute() {
+	public void execute(IEclipseContext context) {
 		
-		IEclipseContext context = application.getContext();
+		IEclipseContext cont = application.getContext();
 		
-		String elementId = (String)context.get("myactivePartId");
+		String elementId = (String)cont.get("myactivePartId");
 		
-		System.out.println("RawHandler : " + elementId);
+		String file_path = (String)cont.get("FILE_PATH");
+		
+		String file_path_2 = (String)context.get("FILE_PATH");
+		
+		System.out.println("RawHandler : " + elementId + ":" + file_path +":"+ file_path_2);
 		
 		// Get the part
 		MPart part = partService.findPart("net.sf.e4ftrace.ui.part.timeline");
@@ -57,9 +61,5 @@ public class RawHandler {
 		tracer.parse();
 	}
 	
-	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell) {
-		execute();
-	}
 		
 }
