@@ -4,12 +4,13 @@ package net.sf.e4ftrace.ui.handler;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.sf.e4ftrace.core.FtraceParser;
+import net.sf.e4ftrace.core.ITraceEvent;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.MContext;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -34,7 +35,7 @@ public class RawHandler {
 	
 	@Inject @Optional private EPartService partService;
 	
-	@Inject private FtraceParser tracer;
+	@Inject private IEventBroker eventBroker;
 	
 	@Execute
 	public void execute(IEclipseContext context) {
@@ -58,7 +59,7 @@ public class RawHandler {
 		//Show the part
 		partService.showPart(part, PartState.VISIBLE); 
 		
-		tracer.parse();
+		
 	}
 	
 		

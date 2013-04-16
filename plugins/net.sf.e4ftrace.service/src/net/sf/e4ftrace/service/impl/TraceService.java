@@ -22,14 +22,14 @@ public class TraceService implements ITraceService {
 	@Override
 	public void openTrace() {
 		
-		System.out.println("openTrace");
+		System.out.println("TraceService : openTrace");
 		
 	}
 
 	@Override
 	public void fetch() {
 		
-		System.out.println("fetch");
+		System.out.println("TraceService : fetch");
 		
 	}
 	
@@ -38,7 +38,7 @@ public class TraceService implements ITraceService {
 	private void getNotified(@EventTopic(ITraceEvent.TOPIC_EVENT_UI) TraceEvent event) {
 	  
 		File file = (File) event.getData();
-		System.out.println("getNotified : " + file.getAbsolutePath());
+		System.out.println("TraceService : getNotified : " + file.getAbsolutePath());
 		
 		
 	}

@@ -46,26 +46,22 @@ public class OpenHandler {
 
 	public static final String OPEN_TRACE_COMMAND = "net.sf.e4ftrace.service.command.open";
 	
-	@Inject private ECommandService commandService;
-	@Inject private EHandlerService handlerService;
-	@Inject private IEclipseContext cont;
-	@Inject private OpenTraceHandler openTraceHandler;
+	@Inject private IEclipseContext eclipseContext;
 	
 	@Inject private IEventBroker eventBroker;
 	
 	@Inject private TraceService traceService;
 	
 	@Inject
-	private void setInfo(@Optional @Named ("FILE_PATH_W") String s){
+	private void setInfo(@Optional @Named ("FILE_PATH") String s){
 		
 		System.out.println("value change "+ s);
-		
-		
+			
 	}
 	
 	@Execute
 	public void execute(
-			@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, final IEclipseContext context, MContext mcont, MApplication app){
+			@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, final IEclipseContext eContext, MContext mContext, MApplication app){
 		
 		FileDialog dialog = new FileDialog(shell);
 		
@@ -80,18 +76,24 @@ public class OpenHandler {
 			traceService.openTrace();
 		}
 		
-		final IEclipseContext wContext = app.getContext();
-		wContext.set("FILE_PATH_W", "fff");
-		wContext.set("FILE_PATH_W", "ggg");
+		final IEclipseContext appContext = app.getContext();
+		appContext.set("FILE_PATH", "111");
+		appContext.set("FILE_PATH", "222");
 		
-//		ParameterizedCommand cmd = commandService.createCommand("org.eclipse.ui.help.aboutAction", null);
-//		System.out.println("handlerService.canExecute(cmd) : "+ handlerService.canExecute(cmd));
-//		handlerService.executeHandler(cmd);
-		context.set("FILE_PATH", "bbb");
-		//context.set("FILE_PATH", "aaa");
-		String str = (String)mcont.getContext().get("FILE_PATH");
+		eContext.set("FILE_PATH", "333");
+		String str = (String) mContext.getContext().get("FILE_PATH");
+		System.out.println("FILE_PATH : "+ str);
 		
-		System.out.println("Str : "+ str);
+		String str2 = (String) eclipseContext.get("FILE_PATH");
+		System.out.println("FILE_PATH : "+ str2);
+	}
+	
+	@Inject private ECommandService commandService;
+	@Inject private EHandlerService handlerService;
+	
+	@Inject private OpenTraceHandler openTraceHandler;
+	
+	private void dynamicCommand(){
 		
 		ParameterizedCommand cmd = commandService.createCommand(OPEN_TRACE_COMMAND, null);
 		System.out.println("handlerService.canExecute(cmd) : "+ handlerService.canExecute(cmd));
