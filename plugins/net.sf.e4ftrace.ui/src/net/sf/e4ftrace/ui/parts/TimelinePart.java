@@ -190,9 +190,6 @@ ITimeGraphRangeListener{
 			@UIEventTopic(UIEvents.UILifeCycle.ACTIVATE) Event event,
 			MApplication application) {
 
-		System.out.println("Got Part : "+ event.getTopic());
-		
-		
 		// Don't inject MPart and IEclipseContext! Need from root context here
 		MPart activePart = (MPart) event.getProperty(UIEvents.EventTags.ELEMENT);
 		
