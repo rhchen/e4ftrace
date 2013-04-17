@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: E4ftrace Dao
+Bundle-SymbolicName: net.sf.e4ftrace.dao;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Izhtw
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.8.0"
+Export-Package: net.sf.e4ftrace.dao,
+ net.sf.e4ftrace.dao.impl

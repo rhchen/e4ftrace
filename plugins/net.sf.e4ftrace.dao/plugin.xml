@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="net.sf.e4ftrace.dao.adaptor" name="Data Source Adaptor" schema="schema/net.sf.e4ftrace.dao.adaptor.exsd"/>
+   <extension
+         point="net.sf.e4ftrace.dao.adaptor">
+      <datasource
+            class="net.sf.e4ftrace.dao.impl.DefaultDataAdaptor">
+      </datasource>
+   </extension>
+
+</plugin>
