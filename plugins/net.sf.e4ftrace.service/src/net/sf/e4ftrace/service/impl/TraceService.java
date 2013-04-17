@@ -14,6 +14,7 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.di.extensions.EventTopic;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.UIEventTopic;
 
 import net.sf.e4ftrace.core.ITraceEvent;
@@ -26,6 +27,8 @@ import net.sf.e4ftrace.service.ITraceService;
 public class TraceService implements ITraceService {
 
 	private static final String IGREETER_ID = "net.sf.e4ftrace.dao.adaptor";
+	
+	@Inject private IEventBroker eventBroker;
 	
 	@Override
 	public void openTrace() {
@@ -75,7 +78,7 @@ public class TraceService implements ITraceService {
 					
 					ITraceDataAdaptor tda = (ITraceDataAdaptor) o;
 					
-					//context.set(IGREETER_ID +"."+ ITraceDataAdaptor.class, tda);
+					eventBroker.subscribe(ITraceEvent.TOPIC_EVENT_UI, tda);
 					
 					executeExtension(tda);
 				

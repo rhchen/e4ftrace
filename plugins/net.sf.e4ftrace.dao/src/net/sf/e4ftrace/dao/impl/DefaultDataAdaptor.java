@@ -2,16 +2,15 @@ package net.sf.e4ftrace.dao.impl;
 
 import java.io.File;
 
-import javax.inject.Inject;
-
 import net.sf.e4ftrace.core.ITraceEvent;
 import net.sf.e4ftrace.core.impl.TraceEvent;
 import net.sf.e4ftrace.dao.ITraceDataAdaptor;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IExecutableExtensionFactory;
-import org.eclipse.e4.core.di.annotations.Optional;
-import org.eclipse.e4.core.di.extensions.EventTopic;
+import org.eclipse.e4.core.services.events.IEventBroker;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventHandler;
 
 public class DefaultDataAdaptor implements ITraceDataAdaptor {
 
@@ -24,17 +23,21 @@ public class DefaultDataAdaptor implements ITraceDataAdaptor {
 
 	public void run(){
 		
-		
 		System.out.println("DefaultDataAdaptor : run");
 	}
 	
-	@Inject
-	@Optional
-	private void getNotified(@EventTopic(ITraceEvent.TOPIC_EVENT_UI) TraceEvent event) {
-	  
-		File file = (File) event.getData();
-		System.out.println("DefaultDataAdaptor : getNotified : " + file.getAbsolutePath());
+	@Override
+	public void handleEvent(Event event) {
 		
+		Object o = event.getProperty(IEventBroker.DATA);
 		
+		if(o instanceof ITraceEvent){
+			
+			ITraceEvent e = (ITraceEvent) o;
+			
+			System.out.println("DefaultDataAdaptor : handleEvent "+ e.getData());
+		}
+		
+		System.out.println("DefaultDataAdaptor : handleEvent");
 	}
 }
