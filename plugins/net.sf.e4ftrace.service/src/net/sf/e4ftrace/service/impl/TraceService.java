@@ -56,37 +56,58 @@ public class TraceService implements ITraceService {
 		
 		System.out.println("TraceService init");
 		
-		evaluate(registry);
+		evaluate(context, registry);
 	}
 	
-	private void evaluate(IExtensionRegistry registry) {
-		IConfigurationElement[] config = registry
-				.getConfigurationElementsFor(IGREETER_ID);
+	private void evaluate(IEclipseContext context, IExtensionRegistry registry) {
+		
+		IConfigurationElement[] config = registry.getConfigurationElementsFor(IGREETER_ID);
+		
 		try {
+			
 			for (IConfigurationElement e : config) {
+				
 				System.out.println("Evaluating extension");
+				
 				final Object o = e.createExecutableExtension("class");
+				
 				if (o instanceof ITraceDataAdaptor) {
-					executeExtension(o);
+					
+					ITraceDataAdaptor tda = (ITraceDataAdaptor) o;
+					
+					//context.set(IGREETER_ID +"."+ ITraceDataAdaptor.class, tda);
+					
+					executeExtension(tda);
+				
 				}
 			}
+			
 		} catch (CoreException ex) {
+			
 			System.out.println(ex.getMessage());
+		
 		}
 	}
 
 	private void executeExtension(final Object o) {
+		
 		ISafeRunnable runnable = new ISafeRunnable() {
+			
 			@Override
 			public void handleException(Throwable e) {
+				
 				System.out.println("Exception in client");
+			
 			}
 
 			@Override
 			public void run() throws Exception {
+				
 				((ITraceDataAdaptor) o).run();
+				
 			}
 		};
+		
 		SafeRunner.run(runnable);
 	}
 }
