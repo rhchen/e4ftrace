@@ -27,10 +27,12 @@
       <import plugin="org.eclipse.e4.ui.di" version="0.10.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.e4.core.contexts" version="1.2.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.e4.core.commands" version="0.10.1" match="greaterOrEqual"/>
+      <import plugin="net.sf.e4ftrace.service" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="net.sf.e4ftrace.core" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.e4.core.services" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.osgi.services" version="3.3.100" match="greaterOrEqual"/>
       <import plugin="javax.annotation"/>
+      <import plugin="org.eclipse.e4.core.di.extensions" version="0.11.100" match="greaterOrEqual"/>
       <import plugin="org.eclipse.linuxtools.tmf.core" version="1.2.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.linuxtools.tmf.ui" version="1.2.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.expressions" version="3.4.401" match="greaterOrEqual"/>
@@ -121,9 +123,8 @@
       <import plugin="org.eclipse.ui.ide" version="3.5.0" match="compatible"/>
       <import plugin="org.eclipse.ui.workbench.texteditor" version="3.7.0" match="compatible"/>
       <import plugin="org.eclipse.equinox.registry" version="3.3.0" match="greaterOrEqual"/>
-      <import plugin="net.sf.e4ftrace.service" version="1.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.e4.core.di.extensions" version="0.11.100" match="greaterOrEqual"/>
       <import plugin="net.sf.e4ftrace.dao" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="net.sf.commonstringutil" version="1.0.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
@@ -359,6 +360,20 @@
 
    <plugin
          id="net.sf.e4ftrace.dao"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.sf.e4ftrace.dao.ftrace.schedswitch"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.sf.commonstringutil"
          download-size="0"
          install-size="0"
          version="0.0.0"

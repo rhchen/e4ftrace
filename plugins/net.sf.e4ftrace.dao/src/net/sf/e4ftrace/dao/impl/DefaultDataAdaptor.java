@@ -38,6 +38,5 @@ public class DefaultDataAdaptor implements ITraceDataAdaptor {
 			System.out.println("DefaultDataAdaptor : handleEvent "+ e.getData());
 		}
 		
-		System.out.println("DefaultDataAdaptor : handleEvent");
 	}
 }
