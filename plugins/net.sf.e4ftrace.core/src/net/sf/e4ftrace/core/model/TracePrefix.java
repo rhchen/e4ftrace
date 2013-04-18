@@ -6,20 +6,24 @@ import net.sf.commonstringutil.StringUtil;
 
 public class TracePrefix extends TraceBiMap{
 
-	private int taskName;
+	private int atomId;
 	private int cpuNum;
 	private long timeStamp;
 	
-	public TracePrefix(int taskName, int cpuNum, long timeStamp) {
+	public TracePrefix(int atomId, int cpuNum, long timeStamp) {
 		super();
-		this.taskName = taskName;
+		this.atomId = atomId;
 		this.cpuNum = cpuNum;
 		this.timeStamp = timeStamp;
 	}
 	
 	
 	public String getTaskName() {
-		return getStringValue(taskName);
+		return getStringValue(atomId);
+	}
+	
+	public int getAtomId() {
+		return atomId;
 	}
 
 

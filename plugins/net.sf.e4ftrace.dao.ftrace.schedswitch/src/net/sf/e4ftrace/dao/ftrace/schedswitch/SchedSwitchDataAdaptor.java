@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.CoreException;
@@ -19,12 +22,20 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.osgi.service.event.Event;
 
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.ImmutableTable.Builder;
+import com.google.common.collect.Lists;
+
 import net.sf.commonstringutil.StringUtil;
+import net.sf.e4ftrace.core.model.TracePrefix;
+import net.sf.e4ftrace.core.model.TraceSuffix;
 import net.sf.e4ftrace.core.uievent.IUIEvent;
 import net.sf.e4ftrace.dao.ITraceDataAdaptor;
 
 public class SchedSwitchDataAdaptor implements ITraceDataAdaptor {
 
+	private ArrayList<ImmutableTable<TracePrefix, Integer, TraceSuffix>> tableList = Lists.newArrayList();
+	
 	@Override
 	public void run() {
 		
@@ -102,6 +113,8 @@ public class SchedSwitchDataAdaptor implements ITraceDataAdaptor {
 		
 		Pattern pt_sched_switch = Pattern.compile("(?i).*sched_switch.*", Pattern.CASE_INSENSITIVE);
 		
+		ArrayList<ImmutableTable.Builder<TracePrefix, Integer, TraceSuffix>> builderList = Lists.newArrayList();
+		
 		for (line = in.readLine(); line != null; line = in.readLine()) {
 			
 			boolean st = StringUtil.startsWithIgnoreCase(line, "#");
@@ -118,9 +131,48 @@ public class SchedSwitchDataAdaptor implements ITraceDataAdaptor {
 					
 					if(count % 10000 == 0) System.out.println("readLine count : "+ count);
 					
+					toTraceEvent(line, builderList);
 				}//if
+				
 			}//if
+			
 		}//for
+		
+		Iterator<Builder<TracePrefix, Integer, TraceSuffix>> it = builderList.iterator();
+		
+		while(it.hasNext()){
+			
+			tableList.add(it.next().build());
+			
+		}
+	}
+	
+	private void toTraceEvent(String line, ArrayList<ImmutableTable.Builder<TracePrefix, Integer, TraceSuffix>> builderList){
+		
+		String aStr = StringUtil.replaceLast(line, "==> ", "");
+		
+		List<String> list = StringUtil.splitAsList(aStr, "sched_switch: ");
+		
+		String prefStr = list.get(0);
+		String suffStr = list.get(1);
+		
+		TracePrefix prefObj = TracePrefix.create(prefStr);
+		TraceSuffix suffObj = TraceSuffix.create(suffStr);
+		
+		int cpuNum = prefObj.getCpuNum();
+		
+		if(cpuNum + 1 > builderList.size()){
+			
+			for(int i=builderList.size(); i<cpuNum + 1; i++){
+				
+				builderList.add(ImmutableTable.<TracePrefix, Integer, TraceSuffix>builder());
+				
+			}
+			
+		}
+		
+		
+		builderList.get(cpuNum).put(prefObj, prefObj.getAtomId(), suffObj);
 	}
 
 }
