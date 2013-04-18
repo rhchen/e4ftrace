@@ -2,8 +2,8 @@ package net.sf.e4ftrace.dao.impl;
 
 import java.io.File;
 
-import net.sf.e4ftrace.core.ITraceEvent;
-import net.sf.e4ftrace.core.impl.TraceEvent;
+import net.sf.e4ftrace.core.uievent.IUIEvent;
+import net.sf.e4ftrace.core.uievent.impl.UIEvent;
 import net.sf.e4ftrace.dao.ITraceDataAdaptor;
 
 import org.eclipse.core.runtime.CoreException;
@@ -31,9 +31,9 @@ public class DefaultDataAdaptor implements ITraceDataAdaptor {
 		
 		Object o = event.getProperty(IEventBroker.DATA);
 		
-		if(o instanceof ITraceEvent){
+		if(o instanceof IUIEvent){
 			
-			ITraceEvent e = (ITraceEvent) o;
+			IUIEvent e = (IUIEvent) o;
 			
 			System.out.println("DefaultDataAdaptor : handleEvent "+ e.getData());
 		}

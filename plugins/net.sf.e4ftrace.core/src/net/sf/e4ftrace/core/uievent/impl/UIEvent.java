@@ -1,12 +1,12 @@
-package net.sf.e4ftrace.core.impl;
+package net.sf.e4ftrace.core.uievent.impl;
 
-import net.sf.e4ftrace.core.ITraceEvent;
+import net.sf.e4ftrace.core.uievent.IUIEvent;
 
-public class TraceEvent implements ITraceEvent {
+public class UIEvent implements IUIEvent {
 
 	private Object data;
 
-	public TraceEvent(Object data) {
+	public UIEvent(Object data) {
 		super();
 		this.data = data;
 	}

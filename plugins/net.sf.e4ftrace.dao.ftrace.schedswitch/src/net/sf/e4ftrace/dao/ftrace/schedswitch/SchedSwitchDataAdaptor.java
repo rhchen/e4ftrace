@@ -20,7 +20,7 @@ import org.eclipse.e4.core.services.events.IEventBroker;
 import org.osgi.service.event.Event;
 
 import net.sf.commonstringutil.StringUtil;
-import net.sf.e4ftrace.core.ITraceEvent;
+import net.sf.e4ftrace.core.uievent.IUIEvent;
 import net.sf.e4ftrace.dao.ITraceDataAdaptor;
 
 public class SchedSwitchDataAdaptor implements ITraceDataAdaptor {
@@ -43,9 +43,9 @@ public class SchedSwitchDataAdaptor implements ITraceDataAdaptor {
 		
 		Object o = event.getProperty(IEventBroker.DATA);
 		
-		if(o instanceof ITraceEvent){
+		if(o instanceof IUIEvent){
 			
-			ITraceEvent e = (ITraceEvent) o;
+			IUIEvent e = (IUIEvent) o;
 			
 			final File file = (File) e.getData();
 			

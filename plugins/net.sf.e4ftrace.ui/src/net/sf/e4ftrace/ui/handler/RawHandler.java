@@ -4,7 +4,7 @@ package net.sf.e4ftrace.ui.handler;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.sf.e4ftrace.core.ITraceEvent;
+import net.sf.e4ftrace.core.uievent.IUIEvent;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Creatable;

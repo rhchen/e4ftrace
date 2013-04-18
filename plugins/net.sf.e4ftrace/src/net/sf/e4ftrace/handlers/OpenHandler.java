@@ -16,8 +16,8 @@ import java.lang.reflect.InvocationTargetException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import net.sf.e4ftrace.core.ITraceEvent;
-import net.sf.e4ftrace.core.impl.TraceEvent;
+import net.sf.e4ftrace.core.uievent.IUIEvent;
+import net.sf.e4ftrace.core.uievent.impl.UIEvent;
 import net.sf.e4ftrace.service.handler.OpenTraceHandler;
 import net.sf.e4ftrace.service.impl.TraceService;
 
@@ -71,7 +71,7 @@ public class OpenHandler {
 		
 		if(fileToOpen.exists() && !fileToOpen.isDirectory()){
 			
-			eventBroker.send(ITraceEvent.TOPIC_EVENT_UI_OPEN_FILE, new TraceEvent(fileToOpen));
+			eventBroker.send(IUIEvent.TOPIC_EVENT_UI_OPEN_FILE, new UIEvent(fileToOpen));
 			
 			traceService.openTrace();
 		}

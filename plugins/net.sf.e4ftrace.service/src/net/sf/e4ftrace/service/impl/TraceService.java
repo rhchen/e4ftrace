@@ -17,8 +17,8 @@ import org.eclipse.e4.core.di.extensions.EventTopic;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.UIEventTopic;
 
-import net.sf.e4ftrace.core.ITraceEvent;
-import net.sf.e4ftrace.core.impl.TraceEvent;
+import net.sf.e4ftrace.core.uievent.IUIEvent;
+import net.sf.e4ftrace.core.uievent.impl.UIEvent;
 import net.sf.e4ftrace.dao.ITraceDataAdaptor;
 import net.sf.e4ftrace.service.ITraceService;
 
@@ -46,7 +46,7 @@ public class TraceService implements ITraceService {
 	
 	@Inject
 	@Optional
-	private void getNotified(@EventTopic(ITraceEvent.TOPIC_EVENT_UI) TraceEvent event) {
+	private void getNotified(@EventTopic(IUIEvent.TOPIC_EVENT_UI) UIEvent event) {
 	  
 		File file = (File) event.getData();
 		System.out.println("TraceService : getNotified : " + file.getAbsolutePath());
@@ -78,7 +78,7 @@ public class TraceService implements ITraceService {
 					
 					ITraceDataAdaptor tda = (ITraceDataAdaptor) o;
 					
-					eventBroker.subscribe(ITraceEvent.TOPIC_EVENT_UI, tda);
+					eventBroker.subscribe(IUIEvent.TOPIC_EVENT_UI, tda);
 					
 					executeExtension(tda);
 				

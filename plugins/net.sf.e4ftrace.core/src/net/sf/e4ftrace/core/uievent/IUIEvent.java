@@ -1,6 +1,6 @@
-package net.sf.e4ftrace.core;
+package net.sf.e4ftrace.core.uievent;
 
-public interface ITraceEvent {
+public interface IUIEvent {
 
 	/* Data Events */
 	public static final String TOPIC_EVENT_DATA              = "TOPIC_EVENT_DATA/*";
