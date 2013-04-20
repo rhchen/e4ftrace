@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: E4Ftrace SchedSwitch Dao
-Bundle-SymbolicName: net.sf.e4ftrace.dao.ftrace.schedswitch;singleton:=true
+Bundle-Name: E4ftrace Sched Adaptor
+Bundle-SymbolicName: net.sf.e4ftrace.dao.ftrace.sched;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: Izhtw
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -12,3 +12,4 @@ Require-Bundle: net.sf.commonstringutil;bundle-version="1.0.0",
  com.google.guava;bundle-version="13.0.1",
  net.sf.e4ftrace.core;bundle-version="1.0.0",
  net.sf.e4ftrace.dao;bundle-version="1.0.0"
+ 

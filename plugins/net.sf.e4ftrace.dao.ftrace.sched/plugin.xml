@@ -4,7 +4,7 @@
    <extension
          point="net.sf.e4ftrace.dao.adaptor">
       <datasource
-            class="net.sf.e4ftrace.dao.ftrace.schedswitch.SchedSwitchDataAdaptor">
+            class="net.sf.e4ftrace.dao.ftrace.sched.SchedSwitchDataAdaptor">
       </datasource>
    </extension>
 

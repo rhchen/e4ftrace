@@ -1,10 +1,9 @@
-package net.sf.e4ftrace.dao.ftrace.schedswitch;
+package net.sf.e4ftrace.dao.ftrace.sched;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.MappedByteBuffer;
@@ -23,8 +22,8 @@ import org.eclipse.e4.core.services.events.IEventBroker;
 import org.osgi.service.event.Event;
 
 import com.google.common.collect.ImmutableTable;
-import com.google.common.collect.ImmutableTable.Builder;
 import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableTable.Builder;
 
 import net.sf.commonstringutil.StringUtil;
 import net.sf.e4ftrace.core.model.TracePrefix;
@@ -42,7 +41,7 @@ public class SchedSwitchDataAdaptor implements ITraceDataAdaptor {
 		System.out.println("SchedSwitchDataAdaptor : run");
 
 	}
-
+	
 	@Override
 	public Object create() throws CoreException {
 		
@@ -174,5 +173,7 @@ public class SchedSwitchDataAdaptor implements ITraceDataAdaptor {
 		
 		builderList.get(cpuNum).put(prefObj, prefObj.getAtomId(), suffObj);
 	}
+
+	
 
 }
