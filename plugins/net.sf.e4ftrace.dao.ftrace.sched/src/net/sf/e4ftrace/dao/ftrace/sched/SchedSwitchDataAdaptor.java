@@ -11,6 +11,7 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.CoreException;
@@ -30,6 +31,7 @@ import net.sf.e4ftrace.core.model.TracePrefix;
 import net.sf.e4ftrace.core.model.TraceSuffix;
 import net.sf.e4ftrace.core.uievent.IUIEvent;
 import net.sf.e4ftrace.dao.ITraceDataAdaptor;
+import net.sf.e4ftrace.dao.ftrace.sched.cache.SchedSwitchCache;
 
 public class SchedSwitchDataAdaptor implements ITraceDataAdaptor {
 
@@ -70,11 +72,33 @@ public class SchedSwitchDataAdaptor implements ITraceDataAdaptor {
 						
 						try {
 							
-							readLine(file);
+							Grep.compile("(?i).*sched_switch.*");
+							Grep.grep(file);
+							
+							FileInputStream fis = new FileInputStream(file);
+							
+							FileChannel fileChannel = fis.getChannel();
+							
+							SchedSwitchCache cache = new SchedSwitchCache();
+							
+							cache.init(fileChannel);
+							
+							cache.get(0);
+							
+							cache.get(0);
+							
+							cache.get(0);
+							
+							//readLine(file);
 						
 						} catch (IOException e1) {
 							
 							e1.printStackTrace();
+							
+						} catch (ExecutionException e) {
+							
+							e.printStackTrace();
+							
 						}
 						
 						return Status.OK_STATUS;

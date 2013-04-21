@@ -15,5 +15,6 @@ Require-Bundle: org.eclipse.e4.core.services;bundle-version="1.0.0",
  net.sf.commonstringutil;bundle-version="1.0.0"
 Import-Package: javax.annotation;version="1.0.0"
 Export-Package: net.sf.e4ftrace.core.model,
+ net.sf.e4ftrace.core.model.impl,
  net.sf.e4ftrace.core.uievent,
  net.sf.e4ftrace.core.uievent.impl

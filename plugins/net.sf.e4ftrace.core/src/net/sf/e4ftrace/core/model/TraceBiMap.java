@@ -13,7 +13,7 @@ public class TraceBiMap {
 	
 	private static final AtomicInteger seed = new AtomicInteger();
 	
-	synchronized protected static int getIntValue(String name){
+	synchronized public static int getIntValue(String name){
 		
 		Assert.isNotNull(name, "field name is null");
 		
@@ -34,7 +34,7 @@ public class TraceBiMap {
 		
 	}
 	
-	protected static String getStringValue(int intKey){
+	public static String getStringValue(int intKey){
 		
 		Assert.isNotNull(intKey, "key index is null");
 		
