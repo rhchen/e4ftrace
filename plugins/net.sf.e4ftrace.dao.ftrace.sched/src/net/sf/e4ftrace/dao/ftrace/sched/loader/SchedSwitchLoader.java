@@ -50,7 +50,7 @@ public class SchedSwitchLoader extends CacheLoader<Integer, ImmutableTable<Integ
 		byte[] buffer = new byte[(int) fileChannel.size()];
 		
 		mmb.get(buffer);
-
+		
 		BufferedReader in = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer)));
 
 		String line;

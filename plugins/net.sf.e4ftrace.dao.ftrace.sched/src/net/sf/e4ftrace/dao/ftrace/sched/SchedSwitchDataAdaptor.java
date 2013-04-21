@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.RandomAccessFile;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
@@ -77,14 +78,19 @@ public class SchedSwitchDataAdaptor implements ITraceDataAdaptor {
 							
 							FileInputStream fis = new FileInputStream(file);
 							
+							//RandomAccessFile fis = new RandomAccessFile(file, "r");
+							
 							FileChannel fileChannel = fis.getChannel();
 							
 							SchedSwitchCache cache = new SchedSwitchCache();
 							
+							
 							cache.init(fileChannel);
 							
+							long start = System.currentTimeMillis();
 							cache.get(0);
-							
+							long delta = System.currentTimeMillis() - start;
+							System.out.println("time use : "+ delta);
 							cache.get(0);
 							
 							cache.get(0);

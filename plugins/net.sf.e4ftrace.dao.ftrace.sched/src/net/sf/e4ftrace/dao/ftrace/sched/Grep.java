@@ -46,7 +46,7 @@ public class Grep {
 				pm.reset(cs);
 			if (pm.find())
 				count++;
-				if(count % 10000 == 0) System.out.print(count + ":" + lines + ":" + cs);
+				if(count % 10000 == 0) System.out.print(count + ":" + cb.position() +":"+ lines + ":" + cs);
 			if (lm.end() == cb.limit())
 				break;
 		}
