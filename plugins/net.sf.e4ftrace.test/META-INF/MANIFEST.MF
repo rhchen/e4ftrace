@@ -4,3 +4,6 @@ Bundle-Name: Test
 Bundle-SymbolicName: net.sf.e4ftrace.test
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.junit,
+ net.sf.commonstringutil;bundle-version="1.0.0",
+ com.google.guava;bundle-version="13.0.1"

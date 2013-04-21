@@ -1,4 +1,4 @@
-package net.sf.e4ftrace.dao.ftrace.sched;
+package net.sf.e4ftrace.test.util;
 
 import java.io.*;
 import java.nio.*;
@@ -46,7 +46,7 @@ public class Grep {
 				pm.reset(cs);
 			if (pm.find())
 				count++;
-				if(count % 10000 == 0) System.out.print(count + ":" + cb.position() +":"+ lines + ":" + cs);
+				if(count % 90000 == 0) System.out.print(count + ":" + cb.position() +":"+ lines + ":" + cs);
 			if (lm.end() == cb.limit())
 				break;
 		}

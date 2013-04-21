@@ -73,8 +73,7 @@ public class SchedSwitchDataAdaptor implements ITraceDataAdaptor {
 						
 						try {
 							
-							Grep.compile("(?i).*sched_switch.*");
-							Grep.grep(file);
+							
 							
 							FileInputStream fis = new FileInputStream(file);
 							
