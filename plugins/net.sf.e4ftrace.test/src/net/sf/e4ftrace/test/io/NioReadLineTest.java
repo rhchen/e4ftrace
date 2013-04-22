@@ -13,6 +13,7 @@ import java.io.RandomAccessFile;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.Iterator;
+import java.util.List;
 import java.util.SortedMap;
 
 import net.sf.commonstringutil.StringUtil;
@@ -114,8 +115,6 @@ public class NioReadLineTest {
 			positionStart = positionEnd;
 		}
 		
-		
-		
 		Iterator<Integer> it = table.rowKeySet().iterator();
 		
 		while(it.hasNext()){
@@ -142,7 +141,7 @@ public class NioReadLineTest {
 				
 				BufferedReader in = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer)));
 				
-				lastLine = readLine(in);
+				toEvent(in);
 				
 			}
 			
@@ -176,23 +175,49 @@ public class NioReadLineTest {
 		
 		printTime("test_mapbuffer", timeStart);
 		
-//		timeStart = System.currentTimeMillis();
-//		
-//		long size2 = fileChannel.size() - size;
-//		
-//		mmb = fileChannel.map(FileChannel.MapMode.READ_ONLY, size, size2);
-//
-//		buffer = new byte[(int) size2];
-//		
-//		mmb.get(buffer);
-//		
-//		in = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(buffer)));
-//		
-//		readLine(in);
-//		
-//		printTime("test_mapbuffer", timeStart);
+
 	}
 	
+	private void toEvent(BufferedReader in) throws IOException{
+		
+		String line;
+		
+		for (line = in.readLine(); line != null; line = in.readLine()) {
+			
+			boolean st = StringUtil.startsWithIgnoreCase(line, "#");
+			
+			if (!st) {
+
+				boolean find = StringUtil.countText(line, "sched_switch") >= 1 ? true : false;
+				
+				if(find){
+					
+					List<String> list = StringUtil.splitAsList(line, "sched_switch:");
+					
+					String prefix = list.get(0);
+					String posfix = list.get(1);
+					
+					posfix = posfix.trim();
+					posfix = StringUtil.replace(posfix, "==>", "");
+					posfix = StringUtil.replace(posfix, "prev_comm", "||");
+					posfix = StringUtil.replace(posfix, "prev_pid", "||");
+					posfix = StringUtil.replace(posfix, "prev_prio", "||");
+					posfix = StringUtil.replace(posfix, "prev_state", "||");
+					posfix = StringUtil.replace(posfix, "next_comm", "||");
+					posfix = StringUtil.replace(posfix, "next_pid", "||");
+					posfix = StringUtil.replace(posfix, "next_prio", "||");
+					
+					List<String> rlist = StringUtil.splitAsList(posfix, "||=");
+					
+					System.out.println("toEvent : "+ rlist.size());
+				}//if
+				
+			}//if
+			
+		}//for
+		
+	}
+
 	private String readLine(BufferedReader in) throws IOException{
 		
 		String line;
@@ -219,14 +244,13 @@ public class NioReadLineTest {
 					
 					if(pCount % 10000 == 0) System.out.println("readLine count : "+ pCount);
 					
+					
+					
 				}//if
 				
 			}//if
 			
 		}//for
-		
-		System.out.println("First Line : "+ firstLine);
-		System.out.println("Last Line :  "+ lastLine);
 		
 		return lastLine;
 	}
