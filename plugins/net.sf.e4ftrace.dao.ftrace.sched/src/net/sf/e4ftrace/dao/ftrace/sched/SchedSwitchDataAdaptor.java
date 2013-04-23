@@ -90,9 +90,14 @@ public class SchedSwitchDataAdaptor implements ITraceDataAdaptor {
 							cache.get(0);
 							long delta = System.currentTimeMillis() - start;
 							System.out.println("time use : "+ delta);
+							start = System.currentTimeMillis();
 							cache.get(0);
-							
+							delta = System.currentTimeMillis() - start;
+							System.out.println("time use : "+ delta);
+							start = System.currentTimeMillis();
 							cache.get(0);
+							delta = System.currentTimeMillis() - start;
+							System.out.println("time use : "+ delta);
 							
 							//readLine(file);
 						
