@@ -50,8 +50,6 @@ public class OpenHandler {
 	
 	@Inject private IEventBroker eventBroker;
 	
-	@Inject private TraceService traceService;
-	
 	@Inject
 	private void setInfo(@Optional @Named ("FILE_PATH") String s){
 		

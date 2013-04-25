@@ -10,4 +10,5 @@ import com.google.common.collect.ImmutableTable;
 public interface ITraceService {
 
 	public ImmutableTable<Integer, Short, ITrace> fetch(URI uri, int pageNum) throws ExecutionException;
+	
 }

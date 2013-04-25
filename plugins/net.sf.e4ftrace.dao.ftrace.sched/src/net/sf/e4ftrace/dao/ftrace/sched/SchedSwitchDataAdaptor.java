@@ -23,8 +23,7 @@ import net.sf.e4ftrace.dao.ftrace.sched.cache.SchedSwitchCache;
 
 public class SchedSwitchDataAdaptor implements ITraceDataAdaptor {
 
-	private ConcurrentMap<URI, SchedSwitchCache> cacheMap = Maps.<URI, SchedSwitchCache>newConcurrentMap();
-	
+	private static ConcurrentMap<URI, SchedSwitchCache> cacheMap = Maps.<URI, SchedSwitchCache>newConcurrentMap();
 	
 	@Override
 	public void run() {
@@ -65,6 +64,9 @@ public class SchedSwitchDataAdaptor implements ITraceDataAdaptor {
 		
 		cacheMap.put(uri, cache);
 		
+		System.out.println("SchedSwitchDataAdaptor : setCurrentTrace : "+ uri);
+		
+		
 	}
 
 	@Override
@@ -74,5 +76,6 @@ public class SchedSwitchDataAdaptor implements ITraceDataAdaptor {
 		return cacheMap.get(uri).get(pageNum);
 		
 	}
+	
 
 }

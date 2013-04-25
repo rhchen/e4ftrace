@@ -38,6 +38,11 @@ public class TraceImpl implements ITimeGraphEntry {
         this.stopTime = stopTime;
         this.className = className;
     }
+    
+    public TraceImpl(String name, String className) {
+        this.name = name;
+       this.className = className;
+    }
 
     // ========================================================================
     // Methods

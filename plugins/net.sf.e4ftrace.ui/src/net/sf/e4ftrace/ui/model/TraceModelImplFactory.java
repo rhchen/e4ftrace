@@ -11,11 +11,95 @@
  *******************************************************************************/
 package net.sf.e4ftrace.ui.model;
 
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.concurrent.ExecutionException;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.eclipse.e4.core.di.annotations.Creatable;
+import org.eclipse.e4.core.di.annotations.Optional;
+
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Lists;
+import com.google.common.collect.UnmodifiableIterator;
+
+import net.sf.e4ftrace.core.model.IEvent;
+import net.sf.e4ftrace.core.model.ITrace;
+import net.sf.e4ftrace.core.model.TraceBiMap;
+import net.sf.e4ftrace.core.uievent.IUIEvent;
+import net.sf.e4ftrace.service.impl.TraceService;
 
 @SuppressWarnings({"javadoc", "nls"})
+@Creatable
 public class TraceModelImplFactory {
 
+	public TraceImpl[] createFTraces(TraceService traceService, URI uri) throws ExecutionException {
+		
+		ImmutableTable<Integer, Short, ITrace> data = traceService.fetch(uri, 0);
+		
+		UnmodifiableIterator<Integer> it = data.rowKeySet().iterator();
+		
+		ArrayList<TraceImpl> rList = Lists.<TraceImpl>newArrayList();
+		
+		while(it.hasNext()){
+			
+			int atomId = it.next();
+			
+			String name = TraceBiMap.getStringValue(atomId);
+			
+			ImmutableMap<Short, ITrace> traces = data.row(atomId);
+			
+			UnmodifiableIterator<Short> ck = traces.keySet().iterator();
+			
+			while(ck.hasNext()){
+				
+				short cpuid = ck.next();
+				ITrace trace = traces.get(cpuid);
+				
+				TraceImpl traceImpl = new TraceImpl(name, name);
+				
+				Iterator<IEvent> ei = trace.getEventsIterator();
+				
+				long prevStamp = 0;
+				EventImpl prevEventImpl = null;
+				
+				while(ei.hasNext()){
+					
+					IEvent event = ei.next();
+					
+					long timestamp = event.getTime();
+					
+					int type = atomId % 7;
+					
+					EventImpl eventImpl = new EventImpl(timestamp, traceImpl, getEventType(type));
+					
+					if(prevStamp != 0){
+						
+						long duration = timestamp - prevStamp;
+						
+						prevEventImpl.setDuration(duration);
+					}
+					
+					prevStamp = timestamp;
+					prevEventImpl = eventImpl;
+					
+				}
+				
+				rList.add(traceImpl);
+			}
+		}
+		
+		TraceImpl[] ra = rList.toArray(new TraceImpl[rList.size()]);
+		
+		return ra;
+		
+	}
+	
 	// ========================================================================
 	// Data
 	// ========================================================================

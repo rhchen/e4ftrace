@@ -1,11 +1,16 @@
 package net.sf.e4ftrace.ui.parts;
 
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.inject.Named;
 
+import net.sf.e4ftrace.core.uievent.IUIEvent;
+import net.sf.e4ftrace.service.impl.TraceService;
 import net.sf.e4ftrace.ui.handler.RawHandler;
 import net.sf.e4ftrace.ui.model.EventImpl;
 import net.sf.e4ftrace.ui.model.TraceImpl;
@@ -51,14 +56,23 @@ ITimeGraphRangeListener{
 	
 	private static SimpleDateFormat stimeformat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
 	
+	@Inject private TraceService traceService;
+	
+	@Inject private IEclipseContext eclipseContext;
+	
 	@PostConstruct
-	public void createPartControl(final Composite parent) {
+	public void createPartControl(final Composite parent) throws ExecutionException {
 		
 		tsfviewer = new TimeGraphViewer(parent, SWT.NONE);
 		tsfviewer.setTimeGraphProvider(new TsfImplProvider());
 		
 		fact = new TraceModelImplFactory();
-		ITimeGraphEntry[] traceArr = fact.createTraces();
+		
+		//ITimeGraphEntry[] traceArr = fact.createTraces();
+		
+		URI uri = (URI)eclipseContext.get(IUIEvent.ACTIVE_TRACE_URI);
+		ITimeGraphEntry[] traceArr = fact.createFTraces(traceService, uri);
+		
 		tsfviewer.setInput(traceArr);
 		tsfviewer.addSelectionListener(this);
 		tsfviewer.addRangeListener(this);

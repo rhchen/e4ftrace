@@ -57,7 +57,7 @@ public class DefaultDataAdaptor implements ITraceDataAdaptor {
 	@Override
 	public ImmutableTable<Integer, Short, ITrace> get(URI uri, Integer pageNum)
 			throws ExecutionException {
-		
 		return null;
 	}
+
 }

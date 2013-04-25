@@ -21,4 +21,6 @@ public interface ITraceDataAdaptor extends IExecutableExtensionFactory, EventHan
 	public void setCurrentTrace(URI uri, TreeBasedTable<Integer, Long, Long> pageTable, FileChannel fileChannel);
 	
 	public ImmutableTable<Integer, Short, ITrace> get(URI uri, Integer pageNum) throws ExecutionException;
+	
+	
 }

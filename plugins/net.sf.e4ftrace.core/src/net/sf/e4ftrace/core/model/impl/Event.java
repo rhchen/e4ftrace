@@ -10,6 +10,10 @@ public class Event implements IEvent {
 		super();
 		this.time = time;
 	}
+
+	public long getTime() {
+		return time;
+	}
 	
 	
 }
