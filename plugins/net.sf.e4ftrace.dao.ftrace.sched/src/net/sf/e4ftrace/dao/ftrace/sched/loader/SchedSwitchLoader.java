@@ -15,8 +15,6 @@ import net.sf.commonstringutil.StringUtil;
 import net.sf.e4ftrace.core.model.IEvent;
 import net.sf.e4ftrace.core.model.ITrace;
 import net.sf.e4ftrace.core.model.TraceBiMap;
-import net.sf.e4ftrace.core.model.TracePrefix;
-import net.sf.e4ftrace.core.model.TraceSuffix;
 import net.sf.e4ftrace.core.model.impl.Event;
 import net.sf.e4ftrace.core.model.impl.Trace;
 
@@ -86,9 +84,7 @@ public class SchedSwitchLoader extends CacheLoader<Integer, ImmutableTable<Integ
 					
 					if(pCount % 10000 == 0) System.out.println("readLine count : "+ pCount);
 					
-					String aStr = StringUtil.replaceLast(line, "==> ", "");
-					
-					List<String> list = StringUtil.splitAsList(aStr, "sched_switch: ");
+					List<String> list = StringUtil.splitAsList(line, "sched_switch: ");
 					
 					String prefStr = list.get(0);
 					String suffStr = list.get(1);
@@ -97,7 +93,7 @@ public class SchedSwitchLoader extends CacheLoader<Integer, ImmutableTable<Integ
 					
 					int count = 0;
 					
-					int atomId = 0;
+					//int atomId = 0;
 					short cpuId = 0;
 					long timeStamp = 0L;
 					
@@ -108,7 +104,7 @@ public class SchedSwitchLoader extends CacheLoader<Integer, ImmutableTable<Integ
 						switch(count){
 						
 						case 0:
-							atomId = TraceBiMap.getIntValue(sn);
+							//atomId = TraceBiMap.getIntValue(sn);
 							break;
 						case 1:
 							sn = StringUtil.remove(sn, "[");
@@ -126,19 +122,52 @@ public class SchedSwitchLoader extends CacheLoader<Integer, ImmutableTable<Integ
 						
 					}//while
 					
-					if(dataTable.contains(atomId, cpuId)){
+					suffStr = suffStr.trim();
+					suffStr = StringUtil.replace(suffStr, "==>", "");
+					suffStr = StringUtil.replace(suffStr, "prev_comm" , "||");
+					suffStr = StringUtil.replace(suffStr, "prev_pid"  , "||");
+					suffStr = StringUtil.replace(suffStr, "prev_prio" , "||");
+					suffStr = StringUtil.replace(suffStr, "prev_state", "||");
+					suffStr = StringUtil.replace(suffStr, "next_comm" , "||");
+					suffStr = StringUtil.replace(suffStr, "next_pid"  , "||");
+					suffStr = StringUtil.replace(suffStr, "next_prio" , "||");
+					
+					List<String> rlist = StringUtil.splitAsList(suffStr, "||=");
+					
+					String prevTask_Name_Id = rlist.get(1) +"-"+ rlist.get(2);
+					String nextTask_Name_Id = rlist.get(5) +"-"+ rlist.get(6);
+					
+					int prevAtomId = TraceBiMap.getIntValue(prevTask_Name_Id);
+					int nextAtomId = TraceBiMap.getIntValue(nextTask_Name_Id);
+					
+					if(dataTable.contains(prevAtomId, cpuId)){
 						
-						ITrace trace = dataTable.get(atomId, cpuId);
+						ITrace trace = dataTable.get(prevAtomId, cpuId);
 						
-						trace.addTraceEvent(new Event());
+						trace.addTraceEvent(new Event(timeStamp));
 						
 					}else{
 						
-						ITrace trace = new Trace();
+						ITrace trace = new Trace(prevTask_Name_Id);
 						
-						trace.addTraceEvent(new Event());
+						trace.addTraceEvent(new Event(timeStamp));
 						
-						dataTable.put(atomId, cpuId, trace);
+						dataTable.put(prevAtomId, cpuId, trace);
+					}
+					
+					if(dataTable.contains(nextAtomId, cpuId)){
+						
+						ITrace trace = dataTable.get(nextAtomId, cpuId);
+						
+						trace.addTraceEvent(new Event(timeStamp));
+						
+					}else{
+						
+						ITrace trace = new Trace(nextTask_Name_Id);
+						
+						trace.addTraceEvent(new Event(timeStamp));
+						
+						dataTable.put(nextAtomId, cpuId, trace);
 					}
 					
 				}//if

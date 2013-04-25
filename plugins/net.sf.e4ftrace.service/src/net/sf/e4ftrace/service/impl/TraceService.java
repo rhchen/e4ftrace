@@ -35,6 +35,7 @@ import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.TreeBasedTable;
+import com.google.common.collect.ImmutableTable.Builder;
 
 import net.sf.commonstringutil.StringUtil;
 import net.sf.e4ftrace.core.model.ITrace;
@@ -58,14 +59,20 @@ public class TraceService implements ITraceService {
 	@Inject private IEclipseContext eclipseContext;
 	
 	@Override
-	public void fetch(URI uri, int pageNum) throws ExecutionException {
+	public ImmutableTable<Integer, Short, ITrace> fetch(URI uri, int pageNum) throws ExecutionException {
 		
 		System.out.println("TraceService : fetch");
 		
+		Builder<Integer, Short, ITrace>  builder = ImmutableTable.<Integer, Short, ITrace>builder();
+		
 		for(ITraceDataAdaptor adaptor : adaptors){
 			
-			adaptor.get(uri, pageNum);
+			ImmutableTable<Integer, Short, ITrace> data = adaptor.get(uri, pageNum);
+			
+			if(data != null) builder.putAll(data);
 		}
+		
+		return builder.build();
 	}
 	
 	@Inject

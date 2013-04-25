@@ -8,8 +8,15 @@ import net.sf.e4ftrace.core.model.ITrace;
 
 public class Trace implements ITrace {
 
+	private String name = "traceDefaultName";
+	
 	private Vector<IEvent> traceEvents = new Vector<IEvent>();
 	
+	public Trace(String name) {
+		super();
+		this.name = name;
+	}
+
 	public Iterator<IEvent> getEventsIterator() {
         return traceEvents.iterator();
     }

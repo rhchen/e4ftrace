@@ -16,6 +16,8 @@ import java.util.concurrent.ExecutionException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.sf.e4ftrace.core.model.ITrace;
+import net.sf.e4ftrace.core.model.TraceBiMap;
 import net.sf.e4ftrace.core.uievent.IUIEvent;
 import net.sf.e4ftrace.service.impl.TraceService;
 
@@ -24,6 +26,9 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
+
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.UnmodifiableIterator;
 
 public class AboutHandler {
 	
@@ -38,9 +43,20 @@ public class AboutHandler {
 			
 			long timeStart = System.currentTimeMillis();
 			
-			traceService.fetch(active_trace_uri, 0);
+			ImmutableTable<Integer, Short, ITrace> data = traceService.fetch(active_trace_uri, 0);
 		
 			long delta = System.currentTimeMillis() - timeStart;
+			
+			UnmodifiableIterator<Integer> it = data.rowKeySet().iterator();
+			
+			while(it.hasNext()){
+				
+				int atomId = it.next();
+				
+				String name = TraceBiMap.getStringValue(atomId);
+				
+				System.out.println("AboutHandler : name : "+ name);
+			}
 			
 			MessageDialog.openInformation(shell, "About", "time use to load : "+ delta);
 			
