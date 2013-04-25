@@ -10,16 +10,52 @@
  *******************************************************************************/
 package net.sf.e4ftrace.handlers;
 
+import java.net.URI;
+import java.util.concurrent.ExecutionException;
+
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import net.sf.e4ftrace.core.uievent.IUIEvent;
+import net.sf.e4ftrace.service.impl.TraceService;
+
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 
 public class AboutHandler {
+	
+	@Inject private TraceService traceService;
+	
+	private URI active_trace_uri;
+	
 	@Execute
 	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell) {
-		MessageDialog.openInformation(shell, "About", "Eclipse 4 Application example.");
+		
+		try {
+			
+			long timeStart = System.currentTimeMillis();
+			
+			traceService.fetch(active_trace_uri, 0);
+		
+			long delta = System.currentTimeMillis() - timeStart;
+			
+			MessageDialog.openInformation(shell, "About", "time use to load : "+ delta);
+			
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	@Inject
+	private void setInfo(@Optional @Named (IUIEvent.ACTIVE_TRACE_URI) URI uri){
+		
+		System.out.println("AboutHandler IUIEvent.ACTIVE_TRACE_URI value change "+ uri);
+		
+		active_trace_uri = uri;
 	}
 }

@@ -55,7 +55,7 @@ public class OpenHandler {
 	@Inject
 	private void setInfo(@Optional @Named ("FILE_PATH") String s){
 		
-		System.out.println("value change "+ s);
+		System.out.println("OpenHandler value change "+ s);
 			
 	}
 	

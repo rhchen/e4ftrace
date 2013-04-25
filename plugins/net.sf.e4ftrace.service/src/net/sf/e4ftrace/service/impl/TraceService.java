@@ -55,11 +55,17 @@ public class TraceService implements ITraceService {
 	
 	@Inject private IEventBroker eventBroker;
 	
+	@Inject private IEclipseContext eclipseContext;
+	
 	@Override
-	public void fetch() {
+	public void fetch(URI uri, int pageNum) throws ExecutionException {
 		
 		System.out.println("TraceService : fetch");
 		
+		for(ITraceDataAdaptor adaptor : adaptors){
+			
+			adaptor.get(uri, pageNum);
+		}
 	}
 	
 	@Inject
@@ -67,6 +73,7 @@ public class TraceService implements ITraceService {
 	private void getNotified(@EventTopic(IUIEvent.TOPIC_EVENT_UI) UIEvent event) throws IOException, ExecutionException {
 	  
 		File file = (File) event.getData();
+		
 		System.out.println("TraceService : getNotified : " + file.getAbsolutePath());
 		
 		createPageTable(file);
@@ -84,6 +91,8 @@ public class TraceService implements ITraceService {
 			adaptor.setCurrentTrace(uri, pageTable, fileChannel);
 			
 		}
+		
+		eclipseContext.set(IUIEvent.ACTIVE_TRACE_URI, uri);
 	}
 	
 	@PostConstruct

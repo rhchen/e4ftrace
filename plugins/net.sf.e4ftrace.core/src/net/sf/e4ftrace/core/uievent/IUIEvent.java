@@ -2,6 +2,8 @@ package net.sf.e4ftrace.core.uievent;
 
 public interface IUIEvent {
 
+	public static final String ACTIVE_TRACE_URI				 = "TOPIC_EVENT_ACTIVE_TRACE_URI";
+	
 	/* Data Events */
 	public static final String TOPIC_EVENT_DATA              = "TOPIC_EVENT_DATA/*";
 
