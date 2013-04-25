@@ -10,9 +10,11 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.SortedMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutionException;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -29,10 +31,13 @@ import org.eclipse.e4.core.di.extensions.EventTopic;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.UIEventTopic;
 
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.TreeBasedTable;
 
 import net.sf.commonstringutil.StringUtil;
+import net.sf.e4ftrace.core.model.ITrace;
 import net.sf.e4ftrace.core.uievent.IUIEvent;
 import net.sf.e4ftrace.core.uievent.impl.UIEvent;
 import net.sf.e4ftrace.dao.ITraceDataAdaptor;
@@ -44,17 +49,12 @@ public class TraceService implements ITraceService {
 
 	private static final String IGREETER_ID = "net.sf.e4ftrace.dao.adaptor";
 	
-	private ConcurrentMap<URI, TreeBasedTable<Integer, Long, Long>> pageTable = Maps.<URI, TreeBasedTable<Integer, Long, Long>>newConcurrentMap();
+	private ConcurrentMap<URI, TreeBasedTable<Integer, Long, Long>> pageTables = Maps.<URI, TreeBasedTable<Integer, Long, Long>>newConcurrentMap();
+	
+	private ArrayList<ITraceDataAdaptor> adaptors = Lists.<ITraceDataAdaptor>newArrayList();
 	
 	@Inject private IEventBroker eventBroker;
 	
-	@Override
-	public void openTrace() {
-		
-		System.out.println("TraceService : openTrace");
-		
-	}
-
 	@Override
 	public void fetch() {
 		
@@ -64,14 +64,26 @@ public class TraceService implements ITraceService {
 	
 	@Inject
 	@Optional
-	private void getNotified(@EventTopic(IUIEvent.TOPIC_EVENT_UI) UIEvent event) throws IOException {
+	private void getNotified(@EventTopic(IUIEvent.TOPIC_EVENT_UI) UIEvent event) throws IOException, ExecutionException {
 	  
 		File file = (File) event.getData();
 		System.out.println("TraceService : getNotified : " + file.getAbsolutePath());
 		
 		createPageTable(file);
 		
-		printPageTable(file);
+		URI uri = file.toURI();
+		
+		TreeBasedTable<Integer, Long, Long> pageTable = pageTables.get(uri);
+		
+		FileInputStream fis = new FileInputStream(file);
+		
+		for(ITraceDataAdaptor adaptor : adaptors){
+			
+			FileChannel fileChannel = fis.getChannel();
+			
+			adaptor.setCurrentTrace(uri, pageTable, fileChannel);
+			
+		}
 	}
 	
 	@PostConstruct
@@ -94,6 +106,7 @@ public class TraceService implements ITraceService {
 				
 				final Object o = e.createExecutableExtension("class");
 				
+				
 				if (o instanceof ITraceDataAdaptor) {
 					
 					ITraceDataAdaptor tda = (ITraceDataAdaptor) o;
@@ -102,6 +115,7 @@ public class TraceService implements ITraceService {
 					
 					executeExtension(tda);
 				
+					adaptors.add(tda);
 				}
 			}
 			
@@ -181,35 +195,7 @@ public class TraceService implements ITraceService {
 			positionStart = positionEnd;
 		}
 		
-		pageTable.put(file.toURI(), table);
-	}
-	
-	private void printPageTable(File file){
-		
-		TreeBasedTable<Integer, Long, Long> table = pageTable.get(file.toURI());
-		
-		Iterator<Integer> it = table.rowKeySet().iterator();
-		
-		while(it.hasNext()){
-			
-			int pageNum = it.next();
-			
-			SortedMap<Long, Long> map = table.row(pageNum);
-			
-			Iterator<Long> itk = map.keySet().iterator();
-			
-			while(itk.hasNext()){
-				
-				long posStart = itk.next();
-				
-				long posEnd = map.get(posStart);
-				
-				long bufferSize = posEnd - posStart;
-				
-				System.out.println("No. "+ pageNum +", posStart "+ posStart + ", posEnd "+ posEnd);
-			}
-			
-		}
+		pageTables.put(file.toURI(), table);
 	}
 	
 }

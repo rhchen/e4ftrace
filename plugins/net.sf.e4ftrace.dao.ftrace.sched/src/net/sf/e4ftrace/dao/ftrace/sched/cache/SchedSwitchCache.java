@@ -14,6 +14,7 @@ import com.google.common.cache.LoadingCache;
 import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
 import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.TreeBasedTable;
 
 public class SchedSwitchCache implements RemovalListener {
 
@@ -21,9 +22,9 @@ public class SchedSwitchCache implements RemovalListener {
 	
 	private LoadingCache<Integer, ImmutableTable<Integer, Short, ITrace>> cache;
 	
-	public void init(FileChannel fc){
+	public void init(FileChannel fc, TreeBasedTable<Integer, Long, Long> pageTable){
 		
-		cacheLoader = new SchedSwitchLoader(fc);
+		cacheLoader = new SchedSwitchLoader(fc, pageTable);
 		
 		cache = CacheBuilder.newBuilder().
 				maximumSize(100).

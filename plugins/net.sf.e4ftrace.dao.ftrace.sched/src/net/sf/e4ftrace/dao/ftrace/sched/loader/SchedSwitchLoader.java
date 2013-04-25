@@ -8,6 +8,7 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.SortedMap;
 import java.util.regex.Pattern;
 
 import net.sf.commonstringutil.StringUtil;
@@ -22,6 +23,7 @@ import net.sf.e4ftrace.core.model.impl.Trace;
 import com.google.common.cache.CacheLoader;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.TreeBasedTable;
 import com.google.common.collect.ImmutableTable.Builder;
 import com.google.common.collect.Lists;
 
@@ -29,9 +31,12 @@ public class SchedSwitchLoader extends CacheLoader<Integer, ImmutableTable<Integ
 
 	private FileChannel fileChannel;
 	
-	public SchedSwitchLoader(FileChannel fileChannel) {
+	private  TreeBasedTable<Integer, Long, Long> pageTable;
+	
+	public SchedSwitchLoader(FileChannel fileChannel, TreeBasedTable<Integer, Long, Long> pageTable) {
 		super();
 		this.fileChannel = fileChannel;
+		this.pageTable   = pageTable;
 	}
 
 
@@ -45,9 +50,15 @@ public class SchedSwitchLoader extends CacheLoader<Integer, ImmutableTable<Integ
 		
 		HashBasedTable<Integer, Short, ITrace> dataTable = HashBasedTable.<Integer, Short, ITrace>create();
 		
-		MappedByteBuffer mmb = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0, fileChannel.size());
+		SortedMap<Long, Long> map = pageTable.row(pageNum);
+		
+		long positionStart = map.firstKey();
+		long positionEnd   = map.get(positionStart);
+		long bufferSize = positionEnd - positionStart;
+		
+		MappedByteBuffer mmb = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0,bufferSize);
 
-		byte[] buffer = new byte[(int) fileChannel.size()];
+		byte[] buffer = new byte[(int) bufferSize];
 		
 		mmb.get(buffer);
 		
@@ -56,8 +67,6 @@ public class SchedSwitchLoader extends CacheLoader<Integer, ImmutableTable<Integ
 		String line;
 		
 		Pattern pt_sched_switch = Pattern.compile("(?i).*sched_switch.*", Pattern.CASE_INSENSITIVE);
-		
-		ArrayList<ImmutableTable.Builder<TracePrefix, Integer, TraceSuffix>> builderList = Lists.newArrayList();
 		
 		int pCount = 0;
 		

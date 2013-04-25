@@ -73,7 +73,6 @@ public class OpenHandler {
 			
 			eventBroker.send(IUIEvent.TOPIC_EVENT_UI_OPEN_FILE, new UIEvent(fileToOpen));
 			
-			traceService.openTrace();
 		}
 		
 		final IEclipseContext appContext = app.getContext();
