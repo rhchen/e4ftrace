@@ -23,7 +23,7 @@ import net.sf.e4ftrace.dao.ftrace.sched.cache.SchedSwitchCache;
 
 public class SchedSwitchDataAdaptor implements ITraceDataAdaptor {
 
-	private static ConcurrentMap<URI, SchedSwitchCache> cacheMap = Maps.<URI, SchedSwitchCache>newConcurrentMap();
+	private ConcurrentMap<URI, SchedSwitchCache> cacheMap = Maps.<URI, SchedSwitchCache>newConcurrentMap();
 	
 	@Override
 	public void run() {

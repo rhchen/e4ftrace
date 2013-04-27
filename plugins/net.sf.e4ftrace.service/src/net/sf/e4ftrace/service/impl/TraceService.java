@@ -4,20 +4,18 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.SortedMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -37,7 +35,6 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.TreeBasedTable;
 import com.google.common.collect.ImmutableTable.Builder;
 
-import net.sf.commonstringutil.StringUtil;
 import net.sf.e4ftrace.core.model.ITrace;
 import net.sf.e4ftrace.core.uievent.IUIEvent;
 import net.sf.e4ftrace.core.uievent.impl.UIEvent;
@@ -45,6 +42,7 @@ import net.sf.e4ftrace.dao.ITraceDataAdaptor;
 import net.sf.e4ftrace.service.ITraceService;
 
 @SuppressWarnings("restriction")
+@Singleton
 @Creatable
 public class TraceService implements ITraceService {
 
