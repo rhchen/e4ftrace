@@ -15,6 +15,8 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Random;
+import java.util.TreeSet;
 import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
@@ -26,6 +28,7 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.google.common.collect.UnmodifiableIterator;
 
 import net.sf.e4ftrace.core.model.IEvent;
@@ -46,6 +49,9 @@ public class TraceModelImplFactory {
 		
 		ArrayList<TraceImpl> rList = Lists.<TraceImpl>newArrayList();
 		
+		Random random = new Random();
+		
+		/* While Tasks */
 		while(it.hasNext()){
 			
 			int atomId = it.next();
@@ -56,6 +62,7 @@ public class TraceModelImplFactory {
 			
 			UnmodifiableIterator<Short> ck = traces.keySet().iterator();
 			
+			/* While Cores */
 			while(ck.hasNext()){
 				
 				short cpuid = ck.next();
@@ -67,14 +74,18 @@ public class TraceModelImplFactory {
 				
 				long prevStamp = 0;
 				EventImpl prevEventImpl = null;
+				TreeSet<Long> tsSet = Sets.<Long>newTreeSet();
 				
+				/* While Events */
 				while(ei.hasNext()){
 					
 					IEvent event = ei.next();
 					
 					long timestamp = event.getTime();
 					
-					int type = atomId % 7;
+					tsSet.add(timestamp);
+					
+					int type = random.nextInt(8) % 7;
 					
 					EventImpl eventImpl = new EventImpl(timestamp, traceImpl, getEventType(type));
 					
@@ -83,12 +94,19 @@ public class TraceModelImplFactory {
 						long duration = timestamp - prevStamp;
 						
 						prevEventImpl.setDuration(duration);
+						
+						traceImpl.addTraceEvent(prevEventImpl);
 					}
 					
 					prevStamp = timestamp;
 					prevEventImpl = eventImpl;
 					
 				}
+				
+				long timeStart = tsSet.first();
+				long timeEnd = tsSet.last();
+				traceImpl.setStartTime(timeStart);
+				traceImpl.setStopTime(timeEnd);
 				
 				rList.add(traceImpl);
 			}

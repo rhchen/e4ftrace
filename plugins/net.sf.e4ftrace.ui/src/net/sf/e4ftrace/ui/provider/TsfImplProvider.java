@@ -16,8 +16,10 @@ import java.util.Map;
 
 import net.sf.e4ftrace.ui.model.EventImpl;
 
+import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.StateItem;
 import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.TimeGraphPresentationProvider;
 import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.model.ITimeEvent;
+import org.eclipse.swt.graphics.RGB;
 
 /**
  * Time Graph Presentation Provider Stub.
@@ -25,11 +27,52 @@ import org.eclipse.linuxtools.tmf.ui.widgets.timegraph.model.ITimeEvent;
 @SuppressWarnings("nls")
 public class TsfImplProvider extends TimeGraphPresentationProvider {
 
+	 public static enum Type {ERROR, WARNING, TIMEADJUSTMENT, ALARM, EVENT, INFORMATION, UNKNOWN, INFO1, INFO2, INFO3, INFO4, INFO5, INFO6, INFO7, INFO8, INFO9}
+	 private enum State {
+		 
+		 ERROR         (new RGB(100, 100, 100)),
+		 WARNING            (new RGB(200, 200, 200)),
+		 TIMEADJUSTMENT        (new RGB(0, 200, 0)),
+		 ALARM         (new RGB(0, 0, 200)),
+		 EVENT             (new RGB(200, 100, 100)),
+		 INFORMATION        (new RGB(200, 150, 100)),
+		 UNKNOWN      (new RGB(200, 100, 100)),
+		 INFO1 (new RGB(200, 200, 0)),
+		 INFO2 (new RGB(200, 150, 100));
+
+        public final RGB rgb;
+
+        private State (RGB rgb) {
+            this.rgb = rgb;
+        }
+    }
+	 
+	@Override
+	public StateItem[] getStateTable() {
+		StateItem[] stateTable = new StateItem[State.values().length];
+		for (int i = 0; i < stateTable.length; i++) {
+			State state = State.values()[i];
+			stateTable[i] = new StateItem(state.rgb, state.toString());
+		}
+		return stateTable;
+	}
+
 	// ========================================================================
 	// Methods
 	// ========================================================================
 	@Override
 	public int getStateTableIndex(ITimeEvent event) {
+		
+		if(event instanceof EventImpl){
+			
+			EventImpl eventImpl = (EventImpl) event;
+			
+			net.sf.e4ftrace.ui.model.EventImpl.Type t = eventImpl.getType();
+			
+			return t.ordinal();
+			
+		}
+		
 	    return 0;
 	}
 
