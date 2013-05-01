@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: E4ftrace Chart
-Bundle-SymbolicName: net.sf.e4ftrace.chart
+Bundle-SymbolicName: net.sf.e4ftrace.chart;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: Izhtw
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

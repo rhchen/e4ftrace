@@ -54,7 +54,7 @@ public class TraceChart extends Chart {
 		@Override
 		public void hideTooltip() {
 
-			System.out.println("TraceChart : HoveredListener : hideTooltip");
+			//System.out.println("TraceChart : HoveredListener : hideTooltip");
 		}
 
 		@Override
@@ -64,7 +64,7 @@ public class TraceChart extends Chart {
 									final int devXMouseMove,
 									final int devYMouseMove) {
 
-			System.out.println("TraceChart : HoveredListener : hoveredValue");
+			//System.out.println("TraceChart : HoveredListener : hoveredValue");
 		}
 
 	}
@@ -146,7 +146,7 @@ public class TraceChart extends Chart {
 	
 	public void setDataModel(ChartDataModel chartDataModel){
 		
-		setDataModel(chartDataModel);
+		super.setDataModel(chartDataModel);
 		
 	}
 }

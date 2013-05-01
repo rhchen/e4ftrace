@@ -21,6 +21,7 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.PageBook;
 import org.osgi.service.event.Event;
@@ -67,9 +68,9 @@ public class ChartPart {
 		xDataTime.setLabel("time");
 		xDataTime.setUnitLabel("second");
 		xDataTime.setDefaultRGB(new RGB(0, 0, 0));
-		xDataTime.setAxisUnit(ChartDataXSerie.AXIS_UNIT_HOUR_MINUTE_OPTIONAL_SECOND);
+		xDataTime.setAxisUnit(ChartDataXSerie.AXIS_UNIT_NUMBER);
 		
-		chartDataModel.setXData2nd(xDataTime);
+		chartDataModel.setXData(xDataTime);
 		chartDataModel.addXyData(xDataTime);
 		
 		float[] speedSerie = new float[count];
@@ -83,9 +84,20 @@ public class ChartPart {
 		chartDataModel.addXyData(yDataSpeed);
 		chartDataModel.addYData(yDataSpeed);
 		
-		_tourChart.setDataModel(chartDataModel);
+		_tourChart.updateChart(chartDataModel, true);
 		
-		_pageBook.showPage(_tourChart);
+		_pageBook.showPage(_pageNoChart);
+		
+		Display.getCurrent().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				_pageBook.showPage(_tourChart);
+				
+			}
+			
+		});
+		
 	}
 	
 	private void createUI(final Composite parent) {

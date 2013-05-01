@@ -129,6 +129,7 @@
       <feature id="org.apache.poi.feature" version="1.0.0.qualifier"/>
       <feature id="org.eclipse.linuxtools.tmf" version="1.2.0.qualifier"/>
       <feature id="org.eclipse.linuxtools.ctf"/>
+      <feature id="net.sf.e4ftrace.chart.feature" version="1.0.0.qualifier"/>
    </features>
 
 
