@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import net.sf.e4ftrace.core.uievent.IUIEvent;
 import net.sf.e4ftrace.service.impl.TraceService;
@@ -209,10 +210,15 @@ public class TimelinePart implements ITimeGraphSelectionListener, ITimeGraphTime
 		IEclipseContext context = application.getContext();
 		
 		if (activePart != null) {
+			
 			context.set("myactivePartId", activePart.getElementId());
-			System.out.println("activePart : "+ activePart.getElementId());
+			
+			System.out.println("TimelinePart : activePart : "+ activePart.getElementId());
+			
 		}else{
+			
 			System.out.println("activePart : null");
+			
 		}
 	}
 }

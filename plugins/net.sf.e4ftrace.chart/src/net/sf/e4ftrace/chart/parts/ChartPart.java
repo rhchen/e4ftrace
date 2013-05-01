@@ -1,11 +1,16 @@
 package net.sf.e4ftrace.chart.parts;
 
+import java.net.URI;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import net.sf.e4ftrace.chart.model.TraceChart;
+import net.sf.e4ftrace.core.model.ITrace;
+import net.sf.e4ftrace.core.uievent.IUIEvent;
 import net.sf.e4ftrace.service.impl.TraceService;
 import net.tourbook.chart.ChartDataModel;
 import net.tourbook.chart.ChartDataXSerie;
@@ -26,6 +31,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.PageBook;
 import org.osgi.service.event.Event;
 
+import com.google.common.collect.ImmutableTable;
+
+@SuppressWarnings("restriction")
 public class ChartPart {
 
 	@Inject private TraceService traceService;
@@ -38,51 +46,56 @@ public class ChartPart {
 	private TraceChart				_tourChart;
 	
 	@PostConstruct
-	public void createPartControl(final Composite parent){
+	public void createPartControl(final Composite parent) throws ExecutionException{
+		
+		URI uri = (URI)eclipseContext.get(IUIEvent.ACTIVE_TRACE_URI);
+		long timeStart = System.currentTimeMillis();
+		ImmutableTable<Integer, Short, ITrace> data = traceService.fetch(uri, 0);
+		long delta = System.currentTimeMillis() - timeStart;
+		System.out.println("ChartPart : delta : "+ delta +", data :"+ data.size());
 		
 		createUI(parent);
 		
-		int count = 1000;
-		
-		Random rnd = new Random();
 		
 		final ChartDataModel chartDataModel = new ChartDataModel(ChartType.LINE);
 		
-		final double[] distanceSerie = new double[count];
-		for(int i=0; i<count; i++) distanceSerie[i] = i * 10;
+		{
+			int count = 1000;
+			Random rnd = new Random();
+			
+			final double[] distanceSerie = new double[count];
+			for(int i=0; i<count; i++) distanceSerie[i] = i * 10;
+			
+			ChartDataXSerie xDataDistance = new ChartDataXSerie(distanceSerie);
+			xDataDistance.setLabel("distance");
+			xDataDistance.setUnitLabel("m");
+			xDataDistance.setValueDivisor(1000);
+			xDataDistance.setDefaultRGB(new RGB(0, 0, 0));
+			
+			chartDataModel.setXData2nd(xDataDistance);
+			chartDataModel.addXyData(xDataDistance);
+			
+			final double[] timeSerie = new double[count];	
+			for(int i=0; i<count; i++) timeSerie[i] = i;
+			
+			final ChartDataXSerie xDataTime = new ChartDataXSerie(timeSerie);
+			
+			xDataTime.setLabel("time");
+			xDataTime.setUnitLabel("second");
+			xDataTime.setDefaultRGB(new RGB(0, 0, 0));
+			xDataTime.setAxisUnit(ChartDataXSerie.AXIS_UNIT_NUMBER);
+			
+			chartDataModel.setXData(xDataTime);
+			chartDataModel.addXyData(xDataTime);
+		}
 		
-		ChartDataXSerie xDataDistance = new ChartDataXSerie(distanceSerie);
-		xDataDistance.setLabel("distance");
-		xDataDistance.setUnitLabel("m");
-		xDataDistance.setValueDivisor(1000);
-		xDataDistance.setDefaultRGB(new RGB(0, 0, 0));
+		ChartDataYSerie y0_DataSpeed = genRndYSeries("Y_0");
+		chartDataModel.addXyData(y0_DataSpeed);
+		chartDataModel.addYData(y0_DataSpeed);
 		
-		chartDataModel.setXData2nd(xDataDistance);
-		chartDataModel.addXyData(xDataDistance);
-		
-		final double[] timeSerie = new double[count];	
-		for(int i=0; i<count; i++) timeSerie[i] = i;
-		
-		final ChartDataXSerie xDataTime = new ChartDataXSerie(timeSerie);
-		
-		xDataTime.setLabel("time");
-		xDataTime.setUnitLabel("second");
-		xDataTime.setDefaultRGB(new RGB(0, 0, 0));
-		xDataTime.setAxisUnit(ChartDataXSerie.AXIS_UNIT_NUMBER);
-		
-		chartDataModel.setXData(xDataTime);
-		chartDataModel.addXyData(xDataTime);
-		
-		float[] speedSerie = new float[count];
-		for(int i=0; i<count; i++) speedSerie[i] = rnd.nextInt(10) * 10;
-		
-		ChartDataYSerie yDataSpeed = new ChartDataYSerie(ChartType.BAR, speedSerie);
-		yDataSpeed.setYTitle("Y Value");
-		yDataSpeed.setUnitLabel("counter");
-		yDataSpeed.setShowYSlider(true);
-		
-		chartDataModel.addXyData(yDataSpeed);
-		chartDataModel.addYData(yDataSpeed);
+		ChartDataYSerie y1_DataSpeed = genRndYSeries("Y_1");
+		chartDataModel.addXyData(y1_DataSpeed);
+		chartDataModel.addYData(y1_DataSpeed);
 		
 		_tourChart.updateChart(chartDataModel, true);
 		
@@ -98,6 +111,22 @@ public class ChartPart {
 			
 		});
 		
+	}
+	
+	private ChartDataYSerie genRndYSeries(String yName){
+		
+		int count = 1000;
+		Random rnd = new Random();
+		
+		float[] speedSerie = new float[count];
+		for(int i=0; i<count; i++) speedSerie[i] = rnd.nextInt(10) * 10;
+		
+		ChartDataYSerie yDataSpeed = new ChartDataYSerie(ChartType.BAR, speedSerie);
+		yDataSpeed.setYTitle(yName);
+		yDataSpeed.setUnitLabel(yName);
+		yDataSpeed.setShowYSlider(true);
+		
+		return yDataSpeed;
 	}
 	
 	private void createUI(final Composite parent) {
@@ -119,21 +148,23 @@ public class ChartPart {
 	
 	@Inject
 	@Optional
-	public void partActivation(
-			@UIEventTopic(UIEvents.UILifeCycle.ACTIVATE) Event event,
-			MApplication application) {
+	public void partActivation(@UIEventTopic(UIEvents.UILifeCycle.ACTIVATE) Event event, MApplication application) {
 
 		// Don't inject MPart and IEclipseContext! Need from root context here
 		MPart activePart = (MPart) event.getProperty(UIEvents.EventTags.ELEMENT);
 		
-		
 		IEclipseContext context = application.getContext();
 		
 		if (activePart != null) {
+			
 			context.set("myactivePartId", activePart.getElementId());
-			System.out.println("activePart : "+ activePart.getElementId());
+			
+			System.out.println("ChartPart : activePart : "+ activePart.getElementId());
+			
 		}else{
+			
 			System.out.println("activePart : null");
+			
 		}
 	}
 }
