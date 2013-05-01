@@ -41,9 +41,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.osgi.service.event.Event;
 
 @SuppressWarnings("restriction")
-public class TimelinePart implements
-ITimeGraphSelectionListener, ITimeGraphTimeListener,
-ITimeGraphRangeListener{
+public class TimelinePart implements ITimeGraphSelectionListener, ITimeGraphTimeListener, ITimeGraphRangeListener{
 
 	private TimeGraphViewer tsfviewer;
 	private TraceModelImplFactory fact;
