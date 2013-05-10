@@ -3,6 +3,7 @@ package net.sf.e4ftrace.outline.parts;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import net.sf.e4ftrace.outline.utils.ImageCache;
 import net.sf.e4ftrace.service.impl.TraceService;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
@@ -11,12 +12,12 @@ import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.UIEvents;
+import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.nebula.widgets.collapsiblebuttons.CollapsibleButtons;
 import org.eclipse.nebula.widgets.collapsiblebuttons.CustomButton;
 import org.eclipse.nebula.widgets.collapsiblebuttons.IButtonListener;
 import org.eclipse.nebula.widgets.collapsiblebuttons.IColorManager;
 import org.eclipse.nebula.widgets.collapsiblebuttons.IMenuListener;
-import org.eclipse.nebula.widgets.collapsiblebuttons.ImageCache;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -84,10 +85,12 @@ public class OutlinePart {
 			
 		});
 
+		ImageRegistry reg = ImageCache.getImageRegistry();
+		
 		cp.setLayoutData(new GridData(GridData.GRAB_VERTICAL | GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_END));
-		cp.addButton("Synchronize", null, ImageCache.getImage("icons/selection_recycle_24.png"), ImageCache.getImage("icons/selection_recycle_16.gif"));
-		cp.addButton("Gantt", null, ImageCache.getImage("icons/gantt_24.png"), ImageCache.getImage("icons/gantt_16.gif"));
-		cp.addButton("Gear", null, ImageCache.getImage("icons/gear_ok_24.png"), ImageCache.getImage("icons/gear_ok_16.gif"));
+		cp.addButton("Synchronize", null, ImageCache.getImageFromPath(ImageCache.IMG_UI_GEAR_24), ImageCache.getImageFromPath(ImageCache.IMG_UI_GEAR_16));
+		cp.addButton("Gantt", null, ImageCache.getImageFromPath(ImageCache.IMG_UI_GEAR_24), ImageCache.getImageFromPath(ImageCache.IMG_UI_GEAR_16));
+		cp.addButton("Gear", null, ImageCache.getImageFromPath(ImageCache.IMG_UI_GEAR_24), ImageCache.getImageFromPath(ImageCache.IMG_UI_GEAR_16));
 
 		cp.addMenuListener(new IMenuListener() {
 
