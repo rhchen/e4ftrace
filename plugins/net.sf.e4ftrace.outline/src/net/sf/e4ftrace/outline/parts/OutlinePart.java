@@ -83,7 +83,7 @@ public class OutlinePart {
 			}
 			
 		});
-		
+
 		cp.setLayoutData(new GridData(GridData.GRAB_VERTICAL | GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_END));
 		cp.addButton("Synchronize", null, ImageCache.getImage("icons/selection_recycle_24.png"), ImageCache.getImage("icons/selection_recycle_16.gif"));
 		cp.addButton("Gantt", null, ImageCache.getImage("icons/gantt_24.png"), ImageCache.getImage("icons/gantt_16.gif"));

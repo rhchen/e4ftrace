@@ -6,3 +6,4 @@ Bundle-Version: 1.0.0
 Bundle-ClassPath: org.eclipse.nebula.widgets.collapsiblebuttons-1.0-NIGHTLY.jar
 Export-Package: org.eclipse.nebula.widgets.collapsiblebuttons;version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.ui;bundle-version="3.104.0"
