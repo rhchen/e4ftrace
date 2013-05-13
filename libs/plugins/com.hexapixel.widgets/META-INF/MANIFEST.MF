@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ribbon Widgets
+Bundle-SymbolicName: com.hexapixel.widgets
+Bundle-Version: 1.0.0
+Bundle-ClassPath: com.hexapixel.widgets.ribbon.alphatest.jar
+Export-Package: com.hexapixel.widgets.generic,
+ com.hexapixel.widgets.ribbon
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.ui;bundle-version="3.104.0"

@@ -131,6 +131,7 @@
       <feature id="org.eclipse.linuxtools.ctf"/>
       <feature id="net.sf.e4ftrace.chart.feature" version="1.0.0.qualifier"/>
       <feature id="net.sf.e4ftrace.outline.feature" version="1.0.0.qualifier"/>
+      <feature id="net.sf.e4ftrace.ribbon.feature" version="1.0.0.qualifier"/>
    </features>
 
 
