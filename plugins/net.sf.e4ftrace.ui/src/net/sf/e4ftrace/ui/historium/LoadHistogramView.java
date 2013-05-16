@@ -1,6 +1,14 @@
 package net.sf.e4ftrace.ui.historium;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+
 import javax.annotation.PostConstruct;
+
+import net.sf.e4ftrace.ui.stub.TmfExperimentStub;
+import net.sf.e4ftrace.ui.stub.TmfTraceStub;
 
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.jface.action.IToolBarManager;
@@ -8,8 +16,10 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.linuxtools.tmf.core.component.ITmfComponent;
 import org.eclipse.linuxtools.tmf.core.event.ITmfEvent;
 import org.eclipse.linuxtools.tmf.core.event.ITmfTimestamp;
+import org.eclipse.linuxtools.tmf.core.event.TmfEvent;
 import org.eclipse.linuxtools.tmf.core.event.TmfTimeRange;
 import org.eclipse.linuxtools.tmf.core.event.TmfTimestamp;
+import org.eclipse.linuxtools.tmf.core.exceptions.TmfTraceException;
 import org.eclipse.linuxtools.tmf.core.request.TmfDataRequest;
 import org.eclipse.linuxtools.tmf.core.request.ITmfDataRequest.ExecutionType;
 import org.eclipse.linuxtools.tmf.core.signal.TmfExperimentRangeUpdatedSignal;
@@ -20,6 +30,7 @@ import org.eclipse.linuxtools.tmf.core.signal.TmfSignal;
 import org.eclipse.linuxtools.tmf.core.signal.TmfSignalHandler;
 import org.eclipse.linuxtools.tmf.core.signal.TmfSignalManager;
 import org.eclipse.linuxtools.tmf.core.signal.TmfTimeSynchSignal;
+import org.eclipse.linuxtools.tmf.core.trace.ITmfTrace;
 import org.eclipse.linuxtools.tmf.core.trace.TmfExperiment;
 import org.eclipse.linuxtools.tmf.ui.views.PinTmfViewAction;
 import org.eclipse.linuxtools.tmf.ui.views.TmfView;
@@ -276,9 +287,49 @@ public class LoadHistogramView implements ITmfComponent {
         }
     }
 
+    private static final String DIRECTORY   = "testfiles";
+    private static final String TEST_STREAM = "A-Test-10K";
+    private static final String EXPERIMENT  = "MyExperiment";
+    private static int          NB_EVENTS   = 10000;
+    private static int          BLOCK_SIZE  = 1000;
+
+    private ITmfTrace<TmfEvent>[] fTestTraces;
+    private TmfExperimentStub<ITmfEvent> fExperiment;
+
+    private static byte SCALE = (byte) -3;
+    
+    public static final String TEST_FILE_PATH = "D:\\work\\eclipse422\\workspace\\linuxtool\\org.eclipse.linuxtools\\lttng\\org.eclipse.linuxtools.tmf.core.tests\\testfiles\\A-Test-10K";
+    
+    @SuppressWarnings("unchecked")
+    private synchronized ITmfTrace<?>[] setupTrace(final String path) {
+        if (fTestTraces == null) {
+            fTestTraces = new ITmfTrace[1];
+            try {
+                final File test = new File(path);
+                final TmfTraceStub trace = new TmfTraceStub(test.getPath(), 0, true);
+                fTestTraces[0] = trace;
+            } catch (final TmfTraceException e) {
+                e.printStackTrace();
+            } 
+        }
+        return fTestTraces;
+    }
+
+    private synchronized void setupExperiment() {
+        if (fExperiment == null) {
+            fExperiment = new TmfExperimentStub<ITmfEvent>(EXPERIMENT, fTestTraces, BLOCK_SIZE);
+            fExperiment.getIndexer().buildIndex(0, TmfTimeRange.ETERNITY, true);
+        }
+    }
+    
     @Focus
     @SuppressWarnings("unchecked")
     public void setFocus() {
+    	
+    	setupTrace(TEST_FILE_PATH);
+    	setupExperiment();
+    	TmfExperiment.setCurrentExperiment(fExperiment);
+    	
         TmfExperiment<ITmfEvent> experiment = (TmfExperiment<ITmfEvent>) TmfExperiment.getCurrentExperiment();
         if ((experiment != null) && (experiment != fCurrentExperiment)) {
             fCurrentExperiment = experiment;
