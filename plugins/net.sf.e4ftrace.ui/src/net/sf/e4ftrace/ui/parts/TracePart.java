@@ -1,0 +1,108 @@
+package net.sf.e4ftrace.ui.parts;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+import net.sf.e4ftrace.ribbon.control.RibbonControlFactory;
+
+import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.layout.FillLayout;
+
+public class TracePart {
+
+	public TracePart() {
+	}
+
+	/**
+	 * Create contents of the view part.
+	 */
+	@PostConstruct
+	public void createControls(Composite parent) {
+		
+		Composite composite = new Composite(parent, SWT.NONE);
+		composite.setLayout(new GridLayout(1, false));
+		
+		Composite composite_1 = new Composite(composite, SWT.NONE);
+		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		GridLayout gl_composite_1 = new GridLayout(2, false);
+		gl_composite_1.horizontalSpacing = 0;
+		gl_composite_1.verticalSpacing = 0;
+		gl_composite_1.marginWidth = 0;
+		gl_composite_1.marginHeight = 0;
+		composite_1.setLayout(gl_composite_1);
+		
+		//Group grpA = new Group(composite_1, SWT.NONE);
+		Control grpA = RibbonControlFactory.createRibbonControl(composite_1);
+		
+		GridData gd_grpA = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		gd_grpA.widthHint = 200;
+		grpA.setLayoutData(gd_grpA);
+		
+		Group group = new Group(composite_1, SWT.NONE);
+		group.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+		group.setBounds(0, 0, 70, 82);
+		
+		ScrolledComposite scrolledComposite = new ScrolledComposite(composite, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		scrolledComposite.setExpandHorizontal(true);
+		scrolledComposite.setExpandVertical(true);
+		
+		Composite composite_2 = new Composite(scrolledComposite, SWT.NONE);
+		composite_2.setLayout(new GridLayout(2, false));
+		
+		CTabFolder tabFolder = new CTabFolder(composite_2, SWT.BORDER | SWT.BOTTOM);
+		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
+		
+		CTabItem tabItem = new CTabItem(tabFolder, SWT.NONE);
+		tabItem.setText("1");
+		
+		CTabItem tabItem_3 = new CTabItem(tabFolder, SWT.NONE);
+		tabItem_3.setText("2");
+		
+		Group grpF = new Group(composite_2, SWT.NONE);
+		grpF.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		grpF.setText("f");
+		
+		CTabFolder tabFolder_1 = new CTabFolder(composite_2, SWT.BORDER | SWT.BOTTOM);
+		tabFolder_1.setTabPosition(SWT.BOTTOM);
+		GridData gd_tabFolder_1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_tabFolder_1.widthHint = 100;
+		tabFolder_1.setLayoutData(gd_tabFolder_1);
+		tabFolder_1.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
+		
+		CTabItem tabItem_1 = new CTabItem(tabFolder_1, SWT.NONE);
+		tabItem_1.setText("2");
+		
+		CTabItem tabItem_2 = new CTabItem(tabFolder_1, SWT.NONE);
+		tabItem_2.setText("4");
+		
+		Group grpB = new Group(composite_2, SWT.NONE);
+		grpB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		grpB.setText("b");
+		scrolledComposite.setContent(composite_2);
+		scrolledComposite.setMinSize(composite_2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+	}
+
+	@PreDestroy
+	public void dispose() {
+	}
+
+	@Focus
+	public void setFocus() {
+		// TODO	Set the focus to control
+	}
+}
