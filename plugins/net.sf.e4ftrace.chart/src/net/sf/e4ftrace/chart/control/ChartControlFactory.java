@@ -56,9 +56,9 @@ public class ChartControlFactory {
 		chartDataModel.addXyData(y0_DataSpeed);
 		chartDataModel.addYData(y0_DataSpeed);
 		
-		ChartDataYSerie y1_DataSpeed = genRndYSeries("Y_1");
-		chartDataModel.addXyData(y1_DataSpeed);
-		chartDataModel.addYData(y1_DataSpeed);
+//		ChartDataYSerie y1_DataSpeed = genRndYSeries("Y_1");
+//		chartDataModel.addXyData(y1_DataSpeed);
+//		chartDataModel.addYData(y1_DataSpeed);
 		
 		_tourChart.updateChart(chartDataModel, true);
 		

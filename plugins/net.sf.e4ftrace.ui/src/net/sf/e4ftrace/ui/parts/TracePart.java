@@ -5,6 +5,7 @@ import java.io.File;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+import net.sf.e4ftrace.chart.control.ChartControlFactory;
 import net.sf.e4ftrace.ribbon.control.RibbonControlFactory;
 
 import org.eclipse.e4.ui.di.Focus;
@@ -105,7 +106,7 @@ public class TracePart extends LoadHistogramView{
 		composite_2.setLayout(new GridLayout(2, false));
 		
 		CTabFolder tabFolder = new CTabFolder(composite_2, SWT.BORDER | SWT.BOTTOM);
-		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 		
 		CTabItem tabItem = new CTabItem(tabFolder, SWT.NONE);
@@ -114,13 +115,15 @@ public class TracePart extends LoadHistogramView{
 		CTabItem tabItem_3 = new CTabItem(tabFolder, SWT.NONE);
 		tabItem_3.setText("2");
 		
-		Group grpF = new Group(composite_2, SWT.NONE);
-		grpF.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		grpF.setText("f");
+//		Group grpF = new Group(composite_2, SWT.NONE);
+//		grpF.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+//		grpF.setText("f");
+		
+		ChartControlFactory.createChartControl(composite_2);
 		
 		CTabFolder tabFolder_1 = new CTabFolder(composite_2, SWT.BORDER | SWT.BOTTOM);
 		tabFolder_1.setTabPosition(SWT.BOTTOM);
-		GridData gd_tabFolder_1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_tabFolder_1 = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
 		gd_tabFolder_1.widthHint = 100;
 		tabFolder_1.setLayoutData(gd_tabFolder_1);
 		tabFolder_1.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
@@ -131,9 +134,12 @@ public class TracePart extends LoadHistogramView{
 		CTabItem tabItem_2 = new CTabItem(tabFolder_1, SWT.NONE);
 		tabItem_2.setText("4");
 		
-		Group grpB = new Group(composite_2, SWT.NONE);
-		grpB.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		grpB.setText("b");
+//		Group grpB = new Group(composite_2, SWT.NONE);
+//		grpB.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+//		grpB.setText("b");
+		
+		ChartControlFactory.createChartControl(composite_2);
+		
 		scrolledComposite.setContent(composite_2);
 		scrolledComposite.setMinSize(composite_2.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
