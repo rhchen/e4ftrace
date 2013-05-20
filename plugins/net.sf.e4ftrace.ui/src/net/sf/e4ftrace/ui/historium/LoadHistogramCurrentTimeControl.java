@@ -38,7 +38,7 @@ public class LoadHistogramCurrentTimeControl extends LoadHistogramTextControl {
      * @param textStyle A test style 
      * @param groupStyle A group style
      */
-    public LoadHistogramCurrentTimeControl(LoadHistogramView parentView, Composite parent, int textStyle, int groupStyle) {
+    public LoadHistogramCurrentTimeControl(ILoadHistogramView parentView, Composite parent, int textStyle, int groupStyle) {
         this(parentView, parent, textStyle, groupStyle, "", HistogramUtils.nanosecondsToString(0L)); //$NON-NLS-1$
     }
 
@@ -52,7 +52,7 @@ public class LoadHistogramCurrentTimeControl extends LoadHistogramTextControl {
      * @param groupValue A group value
      * @param textValue A text value
      */
-    public LoadHistogramCurrentTimeControl(LoadHistogramView parentView, Composite parent, int textStyle, int groupStyle, String groupValue, String textValue) {
+    public LoadHistogramCurrentTimeControl(ILoadHistogramView parentView, Composite parent, int textStyle, int groupStyle, String groupValue, String textValue) {
         super(parentView, parent, textStyle, groupStyle, groupValue, textValue);
     }
 

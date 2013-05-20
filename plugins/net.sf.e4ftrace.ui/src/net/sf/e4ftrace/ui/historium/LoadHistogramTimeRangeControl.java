@@ -34,7 +34,7 @@ public class LoadHistogramTimeRangeControl extends LoadHistogramTextControl {
      * @param textStyle The text style bits.
      * @param groupStyle The group style bits.
      */
-    public LoadHistogramTimeRangeControl(LoadHistogramView parentView, Composite parent, int textStyle, int groupStyle) {
+    public LoadHistogramTimeRangeControl(ILoadHistogramView parentView, Composite parent, int textStyle, int groupStyle) {
         this(parentView, parent, textStyle, groupStyle, "", HistogramUtils.nanosecondsToString(0L)); //$NON-NLS-1$
     }
 
@@ -48,7 +48,7 @@ public class LoadHistogramTimeRangeControl extends LoadHistogramTextControl {
      * @param groupValue A group value
      * @param textValue A text value
      */
-    public LoadHistogramTimeRangeControl(LoadHistogramView parentView, Composite parent, int textStyle, int groupStyle, String groupValue, String textValue) {
+    public LoadHistogramTimeRangeControl(ILoadHistogramView parentView, Composite parent, int textStyle, int groupStyle, String groupValue, String textValue) {
         super(parentView, parent, textStyle, groupStyle, groupValue, textValue);
     }
 

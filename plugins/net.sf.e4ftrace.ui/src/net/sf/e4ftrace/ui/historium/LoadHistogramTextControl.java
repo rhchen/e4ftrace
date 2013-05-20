@@ -44,7 +44,7 @@ public abstract class LoadHistogramTextControl implements FocusListener, KeyList
     /**
      * The parent histogram view.
      */
-    protected final LoadHistogramView fParentView;
+    protected final ILoadHistogramView fParentView;
     private final Composite fParent;
 
     // Controls
@@ -68,7 +68,7 @@ public abstract class LoadHistogramTextControl implements FocusListener, KeyList
      * @param groupStyle The group style bits.
      * 
      */
-    public LoadHistogramTextControl(LoadHistogramView parentView, Composite parent, int textStyle, int groupStyle) {
+    public LoadHistogramTextControl(ILoadHistogramView parentView, Composite parent, int textStyle, int groupStyle) {
         this(parentView, parent, textStyle, groupStyle, "", HistogramUtils.nanosecondsToString(0L)); //$NON-NLS-1$
     }
 
@@ -82,7 +82,7 @@ public abstract class LoadHistogramTextControl implements FocusListener, KeyList
     * @param groupValue A group value
     * @param textValue A text value
     */
-    public LoadHistogramTextControl(LoadHistogramView parentView, Composite parent, int textStyle, int groupStyle, String groupValue, String textValue) {
+    public LoadHistogramTextControl(ILoadHistogramView parentView, Composite parent, int textStyle, int groupStyle, String groupValue, String textValue) {
 
         fParentView = parentView;
         fParent = parent;

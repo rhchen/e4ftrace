@@ -48,7 +48,7 @@ import org.eclipse.ui.IWorkbenchActionConstants;
  * @author Rhchen
  *
  */
-public class LoadHistogramView implements ITmfComponent {
+public class LoadHistogramView implements ITmfComponent, ILoadHistogramView {
 
 	/**
 	 * Action class for pinning of TmfView.
@@ -400,12 +400,18 @@ public class LoadHistogramView implements ITmfComponent {
      * Broadcast TmfSignal about new selected time range.
      * @param newDuration new duration (relative to current start time)
      */
-    public synchronized void updateTimeRange(long newDuration) {
-        if (fCurrentExperiment != null) {
-            long delta = newDuration - fWindowSpan;
-            long newStartTime = fWindowStartTime + (delta / 2);
-            setNewRange(newStartTime, newDuration);
-        }
+    public void updateTimeRange(long newDuration) {
+    	
+    	synchronized(this){
+    		
+    		if (fCurrentExperiment != null) {
+                long delta = newDuration - fWindowSpan;
+                long newStartTime = fWindowStartTime + (delta / 2);
+                setNewRange(newStartTime, newDuration);
+            }
+    		
+    	}
+        
     }
 
     private void setNewRange(long startTime, long duration) {

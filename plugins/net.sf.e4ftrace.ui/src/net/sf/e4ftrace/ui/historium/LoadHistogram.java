@@ -96,7 +96,7 @@ public abstract class LoadHistogram implements ControlListener, PaintListener, K
     /**
      * The parent TMF view.
      */
-    protected LoadHistogramView fParentView;
+    protected ILoadHistogramView fParentView;
 
     // Histogram text fields
     private Text fMaxNbEventsText;
@@ -129,7 +129,7 @@ public abstract class LoadHistogram implements ControlListener, PaintListener, K
      * @param view A reference to the parent TMF view.
      * @param parent A parent composite
      */
-    public LoadHistogram(final LoadHistogramView view, final Composite parent) {
+    public LoadHistogram(final ILoadHistogramView view, final Composite parent) {
         fParentView = view;
 
         createWidget(parent);
@@ -152,7 +152,7 @@ public abstract class LoadHistogram implements ControlListener, PaintListener, K
      * @param parent A parent composite
      * @param load data model
      */
-    public LoadHistogram(final LoadHistogramView view, final Composite parent, LoadHistogramDataModel loadHistogramDataModel) {
+    public LoadHistogram(final ILoadHistogramView view, final Composite parent, LoadHistogramDataModel loadHistogramDataModel) {
         fParentView = view;
 
         createWidget(parent);
@@ -485,7 +485,7 @@ public abstract class LoadHistogram implements ControlListener, PaintListener, K
 
     private void updateCurrentEventTime() {
         final long bucketStartTime = getTimestamp(fScaledData.fCurrentBucket);
-        ((LoadHistogramView) fParentView).updateCurrentEventTime(bucketStartTime);
+        ((ILoadHistogramView) fParentView).updateCurrentEventTime(bucketStartTime);
     }
 
     // ------------------------------------------------------------------------

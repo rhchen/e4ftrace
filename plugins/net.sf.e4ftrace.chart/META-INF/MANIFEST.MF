@@ -23,3 +23,7 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
  net.sf.e4ftrace.core;bundle-version="1.0.0",
  net.sf.e4ftrace.service;bundle-version="1.0.0"
 Import-Package: javax.annotation
+Export-Package: net.sf.e4ftrace.chart.control,
+ net.sf.e4ftrace.chart.listener,
+ net.sf.e4ftrace.chart.model,
+ net.sf.e4ftrace.chart.parts
