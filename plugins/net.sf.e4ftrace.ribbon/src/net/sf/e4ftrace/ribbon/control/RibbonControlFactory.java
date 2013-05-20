@@ -36,9 +36,11 @@ public class RibbonControlFactory {
 		RibbonButton rb2 = new RibbonButton(ftg, ImageCache.getImageFromPath("olb_picture.gif"), "Core 0", RibbonButton.STYLE_ARROW_DOWN_SPLIT | RibbonButton.STYLE_TOGGLE);
 		rb2.setBottomOrRightToolTip(toolTip);
 		RibbonButton rb3 = new RibbonButton(ftg, ImageCache.getImageFromPath("olb_picture.gif"), "Core 1", RibbonButton.STYLE_ARROW_DOWN_SPLIT | RibbonButton.STYLE_TOGGLE);
-		rb2.setBottomOrRightToolTip(toolTip);
+		rb3.setBottomOrRightToolTip(toolTip);
 		RibbonButton rb4 = new RibbonButton(ftg, ImageCache.getImageFromPath("olb_picture.gif"), "Core 2", RibbonButton.STYLE_ARROW_DOWN_SPLIT | RibbonButton.STYLE_TOGGLE);
-		rb2.setBottomOrRightToolTip(toolTip);
+		rb4.setBottomOrRightToolTip(toolTip);
+		RibbonButton rb5 = new RibbonButton(ftg, ImageCache.getImageFromPath("olb_picture.gif"), "Core 3", RibbonButton.STYLE_ARROW_DOWN_SPLIT | RibbonButton.STYLE_TOGGLE);
+		rb5.setBottomOrRightToolTip(toolTip);
 		
 		Control control = ftf.getChildren()[0];
 		control.setParent(parent);

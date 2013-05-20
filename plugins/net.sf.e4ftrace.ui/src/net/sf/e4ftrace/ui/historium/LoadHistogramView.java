@@ -180,7 +180,7 @@ public class LoadHistogramView implements ITmfComponent, ILoadHistogramView {
         Composite viewComposite = new Composite(fParent, SWT.FILL);
         GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 2;
-        gridLayout.horizontalSpacing = 5;
+        gridLayout.horizontalSpacing = 0;
         gridLayout.verticalSpacing = 0;
         gridLayout.marginHeight = 0;
         gridLayout.marginWidth = 0;
@@ -202,11 +202,11 @@ public class LoadHistogramView implements ITmfComponent, ILoadHistogramView {
         gridLayout.numColumns = 2;
         gridLayout.marginHeight = 0;
         gridLayout.marginWidth = 0;
-        gridLayout.horizontalSpacing = 5;
+        gridLayout.horizontalSpacing = 0;
         gridLayout.verticalSpacing = 0;
         gridLayout.makeColumnsEqualWidth = true;
-        gridLayout.marginLeft = 5;
-        gridLayout.marginRight = 5;
+        gridLayout.marginLeft = 0;
+        gridLayout.marginRight = 0;
         controlsComposite.setLayout(gridLayout);
 
         // Current event time control
@@ -225,60 +225,9 @@ public class LoadHistogramView implements ITmfComponent, ILoadHistogramView {
                 windowSpanLabel, HistogramUtils.nanosecondsToString(0L));
         fTimeSpanControl.setLayoutData(gridData);
 
-        // --------------------------------------------------------------------
-        // Time range histogram
-        // --------------------------------------------------------------------
-
-        Composite timeRangeComposite = new Composite(viewComposite, SWT.FILL);
-        gridLayout = new GridLayout();
-        gridLayout.numColumns = 1;
-        gridLayout.marginHeight = 0;
-        gridLayout.marginWidth = 0;
-        gridLayout.marginTop = 5;
-        gridLayout.horizontalSpacing = 0;
-        gridLayout.verticalSpacing = 0;
-        gridLayout.marginLeft = 5;
-        gridLayout.marginRight = 5;
-        timeRangeComposite.setLayout(gridLayout);
-
-        // Use remaining horizontal space
-        gridData = new GridData();
-        gridData.horizontalAlignment = SWT.FILL;
-        gridData.verticalAlignment = SWT.FILL;
-        gridData.grabExcessHorizontalSpace = true;
-        timeRangeComposite.setLayoutData(gridData);
-
-        // Histogram
-        LoadHistogramDataModel trLoadHistogramDataModel = new LoadHistogramDataModel();
-        fTimeRangeHistogram = new LoadTimeRangeHistogram(this, timeRangeComposite, trLoadHistogramDataModel);
-
-        // --------------------------------------------------------------------
-        // Full range histogram
-        // --------------------------------------------------------------------
-
-        Composite fullRangeComposite = new Composite(viewComposite, SWT.FILL);
-        gridLayout = new GridLayout();
-        gridLayout.numColumns = 1;
-        gridLayout.marginHeight = 0;
-        gridLayout.marginWidth = 0;
-        gridLayout.marginTop = 5;
-        gridLayout.horizontalSpacing = 0;
-        gridLayout.verticalSpacing = 0;
-        gridLayout.marginLeft = 5;
-        gridLayout.marginRight = 5;
-        fullRangeComposite.setLayout(gridLayout);
-
-        // Use remaining horizontal space
-        gridData = new GridData();
-        gridData.horizontalAlignment = SWT.FILL;
-        gridData.verticalAlignment = SWT.FILL;
-        gridData.horizontalSpan = 2;
-        gridData.grabExcessHorizontalSpace = true;
-        fullRangeComposite.setLayoutData(gridData);
-
-        // Histogram
-        LoadHistogramDataModel ftLoadHistogramDataModel = new LoadHistogramDataModel();
-        fFullTraceHistogram = new LoadFullTraceHistogram(this, fullRangeComposite, ftLoadHistogramDataModel);
+        createFullRangeHistogram(viewComposite);
+        
+        
 
         // Load the experiment if present
         fCurrentExperiment = (TmfExperiment<ITmfEvent>) TmfExperiment.getCurrentExperiment();
@@ -287,6 +236,67 @@ public class LoadHistogramView implements ITmfComponent, ILoadHistogramView {
         }
     }
 
+    public void createFullRangeHistogram(Composite viewComposite){
+    	
+    	// --------------------------------------------------------------------
+        // Full range histogram
+        // --------------------------------------------------------------------
+        Composite fullRangeComposite = new Composite(viewComposite, SWT.FILL);
+        GridLayout gridLayout = new GridLayout();
+        gridLayout.numColumns = 1;
+        gridLayout.marginHeight = 0;
+        gridLayout.marginWidth = 0;
+        gridLayout.marginTop = 0;
+        gridLayout.horizontalSpacing = 0;
+        gridLayout.verticalSpacing = 0;
+        gridLayout.marginLeft = 0;
+        gridLayout.marginRight = 0;
+        fullRangeComposite.setLayout(gridLayout);
+
+        // Use remaining horizontal space
+        GridData gridData = new GridData();
+        gridData.horizontalAlignment = SWT.FILL;
+        gridData.verticalAlignment = SWT.FILL;
+        //gridData.horizontalSpan = 2;
+        gridData.grabExcessHorizontalSpace = true;
+        fullRangeComposite.setLayoutData(gridData);
+
+        // Histogram
+        LoadHistogramDataModel ftLoadHistogramDataModel = new LoadHistogramDataModel();
+        fFullTraceHistogram = new LoadFullTraceHistogram(this, fullRangeComposite, ftLoadHistogramDataModel);
+    }
+    
+    public void createTimeRangeHistogramControl(Composite viewComposite){
+    	
+    	// --------------------------------------------------------------------
+        // Time range histogram
+        // --------------------------------------------------------------------
+        Composite timeRangeComposite = new Composite(viewComposite, SWT.FILL);
+        GridLayout gridLayout = new GridLayout();
+        gridLayout.numColumns = 1;
+        gridLayout.marginHeight = 0;
+        gridLayout.marginWidth = 0;
+        gridLayout.marginTop = 5;
+        gridLayout.horizontalSpacing = 0;
+        gridLayout.verticalSpacing = 0;
+        gridLayout.marginLeft = 0;
+        gridLayout.marginRight = 0;
+        timeRangeComposite.setLayout(gridLayout);
+
+        // Use remaining horizontal space
+        GridData gridData = new GridData();
+        gridData.horizontalAlignment = SWT.FILL;
+        gridData.verticalAlignment = SWT.FILL;
+        gridData.grabExcessHorizontalSpace = true;
+        //gridData.horizontalSpan = 2;
+        timeRangeComposite.setLayoutData(gridData);
+
+        // Histogram
+        LoadHistogramDataModel trLoadHistogramDataModel = new LoadHistogramDataModel();
+        fTimeRangeHistogram = new LoadTimeRangeHistogram(this, timeRangeComposite, trLoadHistogramDataModel);
+
+    }
+    
     private static final String DIRECTORY   = "testfiles";
     private static final String TEST_STREAM = "A-Test-10K";
     private static final String EXPERIMENT  = "MyExperiment";

@@ -63,9 +63,9 @@ public class TracePart extends LoadHistogramView{
 		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		GridLayout gl_composite_1 = new GridLayout(2, false);
 		gl_composite_1.horizontalSpacing = 0;
-		gl_composite_1.verticalSpacing = 0;
-		gl_composite_1.marginWidth = 0;
-		gl_composite_1.marginHeight = 0;
+		gl_composite_1.verticalSpacing = 5;
+		gl_composite_1.marginWidth = 5;
+		gl_composite_1.marginHeight = 9;
 		composite_1.setLayout(gl_composite_1);
 		
 		//Group grpA = new Group(composite_1, SWT.NONE);
@@ -77,6 +77,21 @@ public class TracePart extends LoadHistogramView{
 		
 		super.createPartControl(composite_1);
 		
+		CTabFolder tabFolder_0 = new CTabFolder(composite_1, SWT.BORDER | SWT.BOTTOM);
+		tabFolder_0.setTabPosition(SWT.BOTTOM);
+		GridData gd_tabFolder_0 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_tabFolder_0.widthHint = 200;
+		tabFolder_0.setLayoutData(gd_tabFolder_0);
+		tabFolder_0.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
+		
+		CTabItem tabItem_0 = new CTabItem(tabFolder_0, SWT.NONE);
+		tabItem_0.setText("1");
+		
+		CTabItem tabItem_01 = new CTabItem(tabFolder_0, SWT.NONE);
+		tabItem_01.setText("2");
+		
+		super.createTimeRangeHistogramControl(composite_1);
+	       
 		//Group group = new Group(composite_1, SWT.NONE);
 		//group.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 		//group.setBounds(0, 0, 70, 82);
