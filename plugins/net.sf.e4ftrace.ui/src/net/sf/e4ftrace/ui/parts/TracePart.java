@@ -106,7 +106,9 @@ public class TracePart extends LoadHistogramView{
 		composite_2.setLayout(new GridLayout(2, false));
 		
 		CTabFolder tabFolder = new CTabFolder(composite_2, SWT.BORDER | SWT.BOTTOM);
-		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		GridData gd = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		gd.verticalIndent = 22;
+		tabFolder.setLayoutData(gd);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 		
 		CTabItem tabItem = new CTabItem(tabFolder, SWT.NONE);
@@ -124,6 +126,7 @@ public class TracePart extends LoadHistogramView{
 		CTabFolder tabFolder_1 = new CTabFolder(composite_2, SWT.BORDER | SWT.BOTTOM);
 		tabFolder_1.setTabPosition(SWT.BOTTOM);
 		GridData gd_tabFolder_1 = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
+		gd_tabFolder_1.verticalIndent = 22;
 		gd_tabFolder_1.widthHint = 100;
 		tabFolder_1.setLayoutData(gd_tabFolder_1);
 		tabFolder_1.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
